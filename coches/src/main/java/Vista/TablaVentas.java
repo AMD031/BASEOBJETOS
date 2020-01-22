@@ -10,11 +10,15 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import Controlador.Controlador;
 import com.mycompany.coches.modelo.Fabricante;
+import com.mycompany.coches.modelo.Venta;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -22,26 +26,39 @@ import javax.swing.event.TableModelListener;
  *
  * @author Antonio Martinez Diaz
  */
-public class TablaVentas extends javax.swing.JFrame implements MouseListener, TableModelListener{
+public class TablaVentas extends javax.swing.JFrame implements MouseListener, TableModelListener {
 
     private ModeloTabla modelo;
     private static ArrayList<String> titulosList;
-   // private static String busqueda; 
+    private boolean ordenar;
+    private List<Object> argumentos;
+    // private static String busqueda; 
     //private static int campoBusqueda;
     //private DefaultTableModel modeleloResultado;
-    
-    
+
     /**
      * Creates new form TablaVentas
      */
+    private void argumentosPorDefecto() {
+  
+        this.argumentos = new ArrayList<>();
+        this.argumentos.add("");
+        this.argumentos.add("");
+        this.argumentos.add("");
+        this.argumentos.add("");
+        this.argumentos.add(true);
+    }
+
     public TablaVentas() {
         initComponents();
-         construirTabla();
+        // Controlador.devolverVentasByCriteria(dni, concesionario, fabricante, modelo, ordenAsc)
+        argumentosPorDefecto();
+        construirTabla(argumentos);
         tVentas.addMouseListener(this);
         tVentas.getModel().addTableModelListener(this);
-       // busqueda = "";
-       // campoBusqueda = Utilidades.NOMBRE;
-       // modeleloResultado = (DefaultTableModel) tablaResultado.getModel();
+        // busqueda = "";
+        // campoBusqueda = Utilidades.NOMBRE;
+        // modeleloResultado = (DefaultTableModel) tablaResultado.getModel();
     }
 
     /**
@@ -57,8 +74,16 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tVentas = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        fDni = new javax.swing.JTextField();
+        fConcesionario = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        fFabricante = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        fModelo = new javax.swing.JTextField();
+        checkAscendente = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
@@ -87,7 +112,49 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         ));
         jScrollPane1.setViewportView(tVentas);
 
-        jButton1.setText("Buscar");
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        fConcesionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fConcesionarioActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel2.setText("DNI");
+
+        fFabricante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fFabricanteActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel4.setText("Fabricante");
+
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel5.setText("Modelo");
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel3.setText("Concesionario");
+
+        fModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fModeloActionPerformed(evt);
+            }
+        });
+
+        checkAscendente.setText("Ascendente");
+        checkAscendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkAscendenteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -96,20 +163,43 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 871, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(checkAscendente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fDni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fConcesionario, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fConcesionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(fFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(fModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkAscendente))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
                 .addContainerGap())
@@ -181,24 +271,22 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(387, 387, 387)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(461, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(402, 402, 402))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addGap(43, 43, 43)
+                .addGap(28, 28, 28)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -211,7 +299,7 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
     }//GEN-LAST:event_crearClienteActionPerformed
 
     private void crearFabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearFabricanteActionPerformed
-         JDialog a = emergenteA(0, "Nuevo fabricate");
+        JDialog a = emergenteA(0, "Nuevo fabricate");
         a.add(new FormularioFabricante());
         emergeteB(a);        // TODO add your handling code here:
     }//GEN-LAST:event_crearFabricanteActionPerformed
@@ -219,20 +307,20 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
     private void crearConsionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearConsionarioActionPerformed
         JDialog a = emergenteA(0, "Nuevo Concesionario");
         a.add(new FormularioConcesionario());
-        emergeteB(a); 
+        emergeteB(a);
     }//GEN-LAST:event_crearConsionarioActionPerformed
 
     private void crearCocheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearCocheActionPerformed
         JDialog a = emergenteA(0, "Nuevo Coche");
         a.add(new FormularioNuevoCoche());
-        emergeteB(a); 
+        emergeteB(a);
     }//GEN-LAST:event_crearCocheActionPerformed
 
     private void crearVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearVentaActionPerformed
-       JDialog a = emergenteA(0, "Nueva venta");
+        JDialog a = emergenteA(0, "Nueva venta");
         a.add(new FormularioVenta());
-        emergeteB(a); 
-                
+        emergeteB(a);
+
     }//GEN-LAST:event_crearVentaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -241,9 +329,44 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         emergeteB(a);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void fConcesionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fConcesionarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fConcesionarioActionPerformed
+
+    private void fFabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fFabricanteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fFabricanteActionPerformed
+
+    private void fModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fModeloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fModeloActionPerformed
+
+    private void checkAscendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkAscendenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkAscendenteActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        String dni = fDni.getText();
+        String concesionario = fConcesionario.getText();
+        String fabricante = fFabricante.getText();
+        String modelo = fModelo.getText();
+        boolean ordenAsc = checkAscendente.isSelected();
+        
+        System.out.println(ordenAsc);
+        this.argumentos.set(0, dni);
+        this.argumentos.set(1, concesionario);
+        this.argumentos.set(2, fabricante);
+        this.argumentos.set(3, modelo);
+        this.argumentos.set(4, ordenAsc);
+        
+        construirTabla(this.argumentos);
+        restaurarEscucha();
+        
     
-    
-      public void construirTabla() {
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    public void construirTabla(List<Object> argumentos) {
         titulosList = new ArrayList<>();
         titulosList.add("Id");
         titulosList.add("Fecha");
@@ -252,26 +375,31 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         titulosList.add("");
         titulosList.add("");
         titulosList.add("");
-  
-
 
         String titulos[] = new String[titulosList.size()];
         for (int i = 0; i < titulos.length; i++) {
             titulos[i] = titulosList.get(i);
         }
 
-        Object[][] data = obtenerMatrizDatos(titulosList);
+        Object[][] data = obtenerMatrizDatos(titulosList, argumentos);
         construirTabla(titulos, data);
     }
 
-      
-      
-     private Object[][] obtenerMatrizDatos(ArrayList<String> titulosList) {
-        String informacion[][] = new String[Controlador.devolverVentas().size()][titulosList.size()];
+    private Object[][] obtenerMatrizDatos(ArrayList<String> titulosList, List<Object> argumentos) {
+        // Controlador.devolverVentasByCriteria(dni, concesionario, fabricante, modelo, ordenAsc)
+        
+       List<Venta> ventasResultado=Controlador.devolverVentasByCriteria(
+                (String)argumentos.get(0),
+                (String)argumentos.get(1),
+                (String) argumentos.get(2),
+                (String) argumentos.get(3),
+                (boolean)argumentos.get(4));
+        String informacion[][] = new String[ventasResultado.size()][titulosList.size()];
+        
         for (int x = 0; x < informacion.length; x++) {
-            informacion[x][Utilidades.ID] = Controlador.obtenerCampoMo("id", x);
-            informacion[x][Utilidades.FECHA] = Controlador.obtenerCampoMo("fecha", x);
-            informacion[x][Utilidades.PRECIO] = Controlador.obtenerCampoMo("precio", x);
+            informacion[x][Utilidades.ID] = ventasResultado.get(x).getId()+"";
+            informacion[x][Utilidades.FECHA] = ventasResultado.get(x).getFecha()+"";
+            informacion[x][Utilidades.PRECIO] = ventasResultado.get(x).getPrecio()+"";
             informacion[x][Utilidades.COCHE] = "COCHE";
             informacion[x][Utilidades.CONCESIONARIO] = "CONCESIONARIO";
             informacion[x][Utilidades.CLIENTE] = "CLIENTE";
@@ -279,29 +407,25 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         }
         return informacion;
     }
-      
-      
+
     public void restaurarEscucha() {
         tVentas.getModel().removeTableModelListener(this);
         tVentas.getModel().addTableModelListener(this);
     }
-    
-    
-      private void construirTabla(String[] titulos, Object[][] data) {
+
+    private void construirTabla(String[] titulos, Object[][] data) {
         modelo = new ModeloTabla(data, titulos);
         tVentas.setModel(modelo);
         tVentas.getColumnModel().getColumn(Utilidades.COCHE).setPreferredWidth(100);
         tVentas.getColumnModel().getColumn(Utilidades.CLIENTE).setPreferredWidth(100);
         tVentas.getColumnModel().getColumn(Utilidades.CONCESIONARIO).setPreferredWidth(130);
         tVentas.getColumnModel().getColumn(Utilidades.ELIMINAR).setPreferredWidth(130);
-        tVentas.getColumnModel().getColumn(Utilidades.COCHE).setCellRenderer(new GestionCeldas("icono")); 
-        tVentas.getColumnModel().getColumn(Utilidades.CLIENTE).setCellRenderer(new GestionCeldas("icono")); 
-        tVentas.getColumnModel().getColumn(Utilidades.CONCESIONARIO).setCellRenderer(new GestionCeldas("icono")); 
-        tVentas.getColumnModel().getColumn(Utilidades.ELIMINAR).setCellRenderer(new GestionCeldas("icono")); 
+        tVentas.getColumnModel().getColumn(Utilidades.COCHE).setCellRenderer(new GestionCeldas("icono"));
+        tVentas.getColumnModel().getColumn(Utilidades.CLIENTE).setCellRenderer(new GestionCeldas("icono"));
+        tVentas.getColumnModel().getColumn(Utilidades.CONCESIONARIO).setCellRenderer(new GestionCeldas("icono"));
+        tVentas.getColumnModel().getColumn(Utilidades.ELIMINAR).setCellRenderer(new GestionCeldas("icono"));
     }
-    
-    
-    
+
     /**
      * @param args the command line arguments
      */
@@ -338,13 +462,22 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JCheckBox checkAscendente;
     private javax.swing.JMenuItem crearCliente;
     private javax.swing.JMenuItem crearCoche;
     private javax.swing.JMenuItem crearConsionario;
     private javax.swing.JMenuItem crearFabricante;
     private javax.swing.JMenuItem crearVenta;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField fConcesionario;
+    private javax.swing.JTextField fDni;
+    private javax.swing.JTextField fFabricante;
+    private javax.swing.JTextField fModelo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -352,95 +485,86 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tVentas;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-     private int idTabla(int fila) {
+    private int idTabla(int fila) {
         String id = (String) modelo.getValueAt(fila, 0);
         int Id = Integer.parseInt(id);
         return Id;
     }
 
- 
-    private  JDialog emergenteA(int fila, String titulo){
-            if(fila >0){
-                  int id = idTabla(fila); 
-            }
-           JDialog frame = new JDialog(this,titulo, true);
-           frame.setLocation(this.getX(), this.getY());
-           return frame;
+    private JDialog emergenteA(int fila, String titulo) {
+        if (fila > 0) {
+            int id = idTabla(fila);
+        }
+        JDialog frame = new JDialog(this, titulo, true);
+        frame.setLocation(this.getX(), this.getY());
+        return frame;
     }
-    private void emergeteB(JDialog frame){
-            frame.pack();
-            frame.setVisible(true);
-            construirTabla();
-            restaurarEscucha();
-    } 
-     
-     
+
+    private void emergeteB(JDialog frame) {
+        frame.pack();
+        frame.setVisible(true);
+        construirTabla(this.argumentos);
+        restaurarEscucha();
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         int fila = tVentas.rowAtPoint(e.getPoint());
         int columna = tVentas.columnAtPoint(e.getPoint());
         int id = idTabla(fila);
         switch (columna) {
-            case Utilidades.COCHE:
-                {
-                    JDialog a = emergenteA(fila, "Editar coche");
-                    a.add(new FormularioCoche(id));
-                    emergeteB(a);
-                    break;
-                }
-            case Utilidades.CONCESIONARIO:
-                {
-                    JDialog a = emergenteA(fila, "Editar Concesionario");
-                    a.add(new FormularioConcesionario(id));
-                    emergeteB(a);
-                    break;
-                }
-            case Utilidades.CLIENTE:
-                {
-                    JDialog a = emergenteA(fila, "Editar Cliente");
-                    a.add(new FormularioCliente(id));
-                    emergeteB(a);
-                    break;
-                }
-            case Utilidades.ELIMINAR:
-                  Controlador.eliminarVenta(id);
-                  construirTabla();
+            case Utilidades.COCHE: {
+                JDialog a = emergenteA(fila, "Editar coche");
+                a.add(new FormularioCoche(id));
+                emergeteB(a);
                 break;
-             default:
+            }
+            case Utilidades.CONCESIONARIO: {
+                JDialog a = emergenteA(fila, "Editar Concesionario");
+                a.add(new FormularioConcesionario(id));
+                emergeteB(a);
+                break;
+            }
+            case Utilidades.CLIENTE: {
+                JDialog a = emergenteA(fila, "Editar Cliente");
+                a.add(new FormularioCliente(id));
+                emergeteB(a);
+                break;
+            }
+            case Utilidades.ELIMINAR:
+                Controlador.eliminarVenta(id);
+                construirTabla(this.argumentos);
+                break;
+            default:
                 break;
         }
-        
-        
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-      
-        
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-       
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-       
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-       
+
     }
-    
-     private void actualizaCelda(TableModelEvent e) {
+
+    private void actualizaCelda(TableModelEvent e) {
         String id = (String) modelo.getValueAt(e.getFirstRow(), 0);
         System.out.println(modelo.getValueAt(e.getFirstRow(), 0));
         int Id = Integer.parseInt(id);
@@ -448,37 +572,29 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         Controlador.actualizarMo(Id, (Integer.valueOf(e.getColumn())), cambio);
     }
 
-     private void errorTextoDialog(String mensaje) {
+    private void errorTextoDialog(String mensaje) {
         JOptionPane.showMessageDialog(this,
                 mensaje,
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
     }
-     
-     
+
     @Override
-    public void tableChanged(TableModelEvent e) {        
+    public void tableChanged(TableModelEvent e) {
         String Cambio = (String) modelo.getValueAt(e.getFirstRow(), e.getColumn());
         if (e.getColumn() == Utilidades.FECHA) {
-           if (true) {
+            if (true) {
                 actualizaCelda(e);
             } else {
                 errorTextoDialog("error en datos");
-                construirTabla();
+                construirTabla(this.argumentos);
                 restaurarEscucha();
             }
-        }else if(e.getColumn() == Utilidades.PRECIO){
-             actualizaCelda(e);
+        } else if (e.getColumn() == Utilidades.PRECIO) {
+            actualizaCelda(e);
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
     }
+
+
 }

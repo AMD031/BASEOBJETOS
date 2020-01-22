@@ -140,4 +140,20 @@ public class Listar {
         return ventas ;
     }
 
+    public static List<Venta> rVentaTodosByCriteria(String dni, String concesionario, String fabricante, String modelo, boolean ordenAsc) {
+        TypedQuery<Venta> consulta = null;
+        if(ordenAsc){
+            consulta = Conexion.getConexion().getEmf().createNamedQuery("filtroAvanzadoASC", Venta.class).setParameter("nombreFabricante", fabricante).setParameter("modeloCoche", modelo).setParameter("nombreConcesionario", concesionario).setParameter("dniCliente", dni);
+        }
+        else {
+            consulta = Conexion.getConexion().getEmf().createNamedQuery("filtroAvanzadoDESC", Venta.class).setParameter("nombreFabricante", fabricante).setParameter("modeloCoche", modelo).setParameter("nombreConcesionario", concesionario).setParameter("dniCliente", dni);
+        }
+        List<Venta> ventas =consulta.getResultList();
+        for(Venta v : ventas){
+        System.out.println(v);
+        }
+        Conexion.getConexion().getEmf().close();
+        return ventas ;
+    }
+
 }

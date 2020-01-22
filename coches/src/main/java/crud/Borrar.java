@@ -98,7 +98,11 @@ public class Borrar {
         EntityManager manager = Conexion.getConexion().getEmf();
         try {
             manager.getTransaction().begin();
-            manager.remove(manager.find(Venta.class, id));
+            Venta v = manager.find(Venta.class, id);
+            v.setCliente(null);
+            v.setCoche(null);
+            v.setConcesionario(null);
+            manager.remove(v);
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();

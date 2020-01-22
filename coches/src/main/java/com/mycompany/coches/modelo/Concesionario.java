@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 /**
@@ -56,7 +57,7 @@ public class Concesionario {
         this.localidad = localidad;
     }
 
-        @OneToMany(mappedBy="concesionario", cascade = CascadeType.ALL)
+        @OneToMany(mappedBy="concesionario")
         private List<Venta>ventasCon;  
        
         
@@ -110,6 +111,8 @@ public class Concesionario {
     public void setVentasCon(List<Venta> ventasCon) {
         this.ventasCon = ventasCon;
     }
+    
+
 
     @Override
     public String toString() {

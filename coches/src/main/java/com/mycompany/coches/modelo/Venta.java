@@ -17,7 +17,9 @@ import javax.persistence.Table;
 
 
 @NamedQueries({
-@NamedQuery(name="recupearTodoVenta", query="select c from Venta c") 
+@NamedQuery(name="recupearTodoVenta", query="select c from Venta c"),
+@NamedQuery(name="filtroAvanzadoASC", query="select v from Fabricante fab, Coche co, Concesionario con, Cliente cli, Venta v where fab.id=co.fabricante.id AND co.id=v.coche.id AND cli.id=v.cliente.id AND con.id=v.concesionario.id AND fab.nombre LIKE CONCAT('%',:nombreFabricante,'%') AND co.modelo LIKE CONCAT('%',:modeloCoche,'%') AND con.nombre LIKE CONCAT('%',:nombreConcesionario,'%') AND cli.dniNie LIKE CONCAT('%',:dniCliente,'%') ORDER BY v.fecha ASC"),
+@NamedQuery(name="filtroAvanzadoDESC", query="select v from Fabricante fab, Coche co, Concesionario con, Cliente cli, Venta v where fab.id=co.fabricante.id AND co.id=v.coche.id AND cli.id=v.cliente.id AND con.id=v.concesionario.id AND fab.nombre LIKE CONCAT('%',:nombreFabricante,'%') AND co.modelo LIKE CONCAT('%',:modeloCoche,'%') AND con.nombre LIKE CONCAT('%',:nombreConcesionario,'%') AND cli.dniNie LIKE CONCAT('%',:dniCliente,'%') ORDER BY v.fecha DESC")
 })
 
 
@@ -34,7 +36,7 @@ public class Venta implements Serializable{
     private int id;
     private String fecha;
     
-    @ManyToOne(cascade = CascadeType.ALL) 
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
     

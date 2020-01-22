@@ -23,6 +23,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 /**
@@ -122,8 +123,16 @@ public class Cliente {
         this.fecha = fecha;
     }
 
-    @OneToMany (mappedBy = "cliente", cascade = CascadeType.ALL) 
+    @OneToMany (mappedBy = "cliente") 
     private List<Venta> ventasCli;
+    
+    @PreRemove
+    public void nulificarClienteVentas(){
+      for(Venta venta: ventasCli  ){
+         venta.setCliente(null);
+      }
+    }
+    
     
     
     public void addVentaCli(Venta v){

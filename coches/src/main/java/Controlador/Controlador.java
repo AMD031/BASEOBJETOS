@@ -27,8 +27,12 @@ import java.util.logging.Level;
  */
 public class Controlador {
 
-      public static List<Venta> devolverVentas() {
+    public static List<Venta> devolverVentas() {
         return  Listar.rVentaTodos();
+    }
+
+    public static List<Venta> devolverVentasByCriteria(String dni, String concesionario, String fabricante, String modelo, boolean ordenAsc) {
+        return  Listar.rVentaTodosByCriteria(dni, concesionario, fabricante, modelo, ordenAsc);
     }
       
       
