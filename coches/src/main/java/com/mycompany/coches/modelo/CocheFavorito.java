@@ -1,5 +1,6 @@
 package com.mycompany.coches.modelo;
 
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -80,6 +81,35 @@ public class CocheFavorito {
     @Override
     public String toString() {
         return "CocheFavorito{" + "id=" + id + ", marca=" + marca + ", modelo=" + modelo + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.marca);
+        hash = 97 * hash + Objects.hashCode(this.modelo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CocheFavorito other = (CocheFavorito) obj;
+        if (!Objects.equals(this.marca, other.marca)) {
+            return false;
+        }
+        if (!Objects.equals(this.modelo, other.modelo)) {
+            return false;
+        }
+        return true;
     }
 
  

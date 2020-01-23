@@ -123,7 +123,7 @@ public class Cliente {
         this.fecha = fecha;
     }
 
-    @OneToMany (mappedBy = "cliente") 
+    @OneToMany (mappedBy = "cliente", cascade = CascadeType.PERSIST) 
     private List<Venta> ventasCli;
     
     @PreRemove
@@ -131,6 +131,14 @@ public class Cliente {
       for(Venta venta: ventasCli  ){
          venta.setCliente(null);
       }
+    }
+
+    public List<Venta> getVentasCli() {
+        return ventasCli;
+    }
+
+    public void setVentasCli(List<Venta> ventasCli) {
+        this.ventasCli = ventasCli;
     }
     
     

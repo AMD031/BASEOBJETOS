@@ -58,6 +58,9 @@ public class FormularioCliente extends javax.swing.JPanel {
        fLocalidad.setText(cliente.getLocalidad());
        fDni.setText(cliente.getDniNie());
        fFecha.setText(cliente.getFecha());
+       marcaFavorito.setText(cliente.getCocheFavorito().getMarca());
+       modeloFavorito.setText(cliente.getCocheFavorito().getModelo());
+       
       }   
   
   
@@ -91,6 +94,11 @@ public class FormularioCliente extends javax.swing.JPanel {
         fFecha = new javax.swing.JTextField();
         Bastidor4 = new javax.swing.JLabel();
         guardar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        Bastidor5 = new javax.swing.JLabel();
+        Bastidor6 = new javax.swing.JLabel();
+        marcaFavorito = new javax.swing.JTextField();
+        modeloFavorito = new javax.swing.JTextField();
 
         idLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         idLabel.setText("Id");
@@ -128,6 +136,15 @@ public class FormularioCliente extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Coche deseado:");
+
+        Bastidor5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Bastidor5.setText("Modelo");
+
+        Bastidor6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Bastidor6.setText("Marca");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,6 +156,16 @@ public class FormularioCliente extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Bastidor6)
+                            .addComponent(Bastidor5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(marcaFavorito, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                            .addComponent(modeloFavorito))
+                        .addGap(140, 140, 140))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,14 +179,15 @@ public class FormularioCliente extends javax.swing.JPanel {
                                     .addComponent(Bastidor2)
                                     .addComponent(Bastidor3)
                                     .addComponent(Bastidor4))
-                                .addGap(72, 72, 72)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fIdCliente)
-                            .addComponent(fApellidos)
-                            .addComponent(fLocalidad)
-                            .addComponent(fDni)
-                            .addComponent(fFecha)
-                            .addComponent(fNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(24, 24, 24)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(fNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                            .addComponent(fApellidos, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(fLocalidad, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(fDni, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(fFecha, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(fIdCliente))
                         .addGap(139, 139, 139))))
         );
         layout.setVerticalGroup(
@@ -191,7 +219,17 @@ public class FormularioCliente extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Bastidor4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(marcaFavorito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Bastidor6))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modeloFavorito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Bastidor5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(guardar)
                 .addContainerGap())
         );
@@ -204,11 +242,18 @@ public class FormularioCliente extends javax.swing.JPanel {
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
     
         Cliente clienteEditado = new Cliente();
+        CocheFavorito cocheFavorito = new CocheFavorito();
         clienteEditado.setNombre(fNombre.getText());
         clienteEditado.setApellidos(fApellidos.getText());
         clienteEditado.setDniNie(fDni.getText());
         clienteEditado.setLocalidad(fLocalidad.getText());
         clienteEditado.setFecha(fFecha.getText());
+       
+        cocheFavorito.setMarca(marcaFavorito.getText());
+        cocheFavorito.setModelo(modeloFavorito.getText());
+        clienteEditado.setCocheFavorito(cocheFavorito);  
+      
+        
         
         if(nuevo){
             Controlador.crear(Utilidades.CLIENTE,  clienteEditado);
@@ -229,6 +274,8 @@ public class FormularioCliente extends javax.swing.JPanel {
     private javax.swing.JLabel Bastidor2;
     private javax.swing.JLabel Bastidor3;
     private javax.swing.JLabel Bastidor4;
+    private javax.swing.JLabel Bastidor5;
+    private javax.swing.JLabel Bastidor6;
     private javax.swing.JTextField fApellidos;
     private javax.swing.JTextField fDni;
     private javax.swing.JTextField fFecha;
@@ -238,5 +285,8 @@ public class FormularioCliente extends javax.swing.JPanel {
     private javax.swing.JButton guardar;
     private javax.swing.JLabel idLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField marcaFavorito;
+    private javax.swing.JTextField modeloFavorito;
     // End of variables declaration//GEN-END:variables
 }

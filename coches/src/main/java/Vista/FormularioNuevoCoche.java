@@ -62,7 +62,7 @@ public class FormularioNuevoCoche extends javax.swing.JPanel implements MouseLis
         Modelo1 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Editar Coche:");
+        jLabel1.setText("Nuevo Coche:");
 
         tablaFabricante.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -89,6 +89,7 @@ public class FormularioNuevoCoche extends javax.swing.JPanel implements MouseLis
         Bastidor.setText("Bastidor");
 
         fNombre.setEditable(false);
+        fNombre.setBackground(new java.awt.Color(204, 204, 204));
         fNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fNombreActionPerformed(evt);
@@ -115,6 +116,7 @@ public class FormularioNuevoCoche extends javax.swing.JPanel implements MouseLis
         });
 
         fCif.setEditable(false);
+        fCif.setBackground(new java.awt.Color(204, 204, 204));
         fCif.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fCifActionPerformed(evt);

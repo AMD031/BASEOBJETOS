@@ -84,7 +84,7 @@ public class Controlador {
           switch (campo) {
               case Utilidades.CLIENTE:
                   Cliente cliente = (Cliente)object;
-                 resultado =     Crear.gCliente(cliente);
+                 resultado = Crear.gCliente(cliente);
                   break;
               case Utilidades.CONCESIONARIO:
                   Concesionario concesionario = (Concesionario)object;
@@ -147,6 +147,10 @@ public class Controlador {
 
     public static boolean eliminarFabricante(int id) {
         return Borrar.bFabricantePorId(id);
+    }
+
+    public static String devolverCocheMasDeseado() {
+        return Listar.cocheMasPopular();
     }
 
  

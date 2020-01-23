@@ -5,12 +5,20 @@
  */
 package com.mycompany.coches.modelo;
 
+import static com.objectdb.o.MSS.cb;
+import static com.objectdb.o.MSS.cq;
 import crud.Listar;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -19,27 +27,10 @@ import javax.persistence.TypedQuery;
 public class Main {
 
     public static void main(String[] args) {
-        
-          
-         
-        EntityManager manager = Conexion.getConexion().getEmf();
+
+          EntityManager manager = Conexion.getConexion().getEmf();
         manager.getTransaction().begin();
-         /*Venta venta = new Venta("hoy", 1000);
-         Cliente cliente = new Cliente("Pedro", "Perez", "Madrid", "jfldsjkl", "hoy");
-         Cliente cliente2 = new Cliente("Maria", "Perez", "Madrid", "jfldsjkl", "hoy");
-         Coche coche =  new Coche("341223ab", "seat sport", "rojo");
-       
-         coche.setFabricante(new Fabricante("131223CX", "Seat"));
-         coche.addVenta(venta);
-         cliente.setCocheFavorito(new CocheFavorito("ferrari", "f40"));
-         venta.setCliente(cliente);
-         venta.setConcesionario(new Concesionario("12378291b", "opel", "sevill"));
-        
-         
-         manager.persist(venta);
-         manager.persist(cliente2);
-        */
-       
+
         Cliente cli1 = new Cliente("Pedro", "Porro", "Cordoba", "123456789A", "1-1-1990");
         Cliente cli2 = new Cliente("Maria", "Prieto", "MAdrid", "123456789B", "1-1-1999");
        
@@ -76,17 +67,51 @@ public class Main {
         
         manager.getTransaction().commit();
         manager.close();
-
-      
-        
-        for(Coche cochec : Listar.rCocheTodos()){
+   /*      for(Coche cochec : Listar.rCocheTodos()){
             System.out.println(cochec);
-        }
-
-      
-       // System.out.println(Controlador.Controlador.obtenerCampoMo("id",1));
-       // nombre fabricante, modelo coche, nombre concesionario, dni cliente
+        }*/
+   
+   
+   
+   
+   
+   
+   
+      //coche mas popular
+    /*    EntityManager manager2 = Conexion.getConexion().getEmf();       
+        CriteriaBuilder builder = manager2.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteria = builder.createQuery(Tuple.class);      
+        Root<Cliente> root = criteria.from(Cliente.class);
+        Expression orden =  builder.count(root);
+        
+        criteria.multiselect(root.get("cocheFavorito").get("marca"),root.get("cocheFavorito").get("modelo"), orden);
+        criteria.groupBy(root.get("cocheFavorito").get("modelo"),root.get("cocheFavorito").get("marca"));
+        criteria.orderBy(builder.desc(orden));
+        
+        List<Tuple> tuples = manager2.createQuery(criteria).setMaxResults(1).getResultList();
+       for (Tuple tuple : tuples) {
+            String marca= (String) tuple.get(0);
+            String modelo =(String) tuple.get(1);
+            Long cantidad = (Long) tuple.get(2);
+            System.out.println(marca+"  "+modelo+" "+cantidad);
+        }*/
+        //fin conculta
     
+    
+    
+    
+    
+    
+    
+    
+        /*TypedQuery<CocheFavorito> tq = manager2.createQuery(q);
+        List<CocheFavorito> coches = tq.getResultList();
+         q.groupBy(c.get("cocheFavorito").get("modelo"));
+        for (CocheFavorito coche : coches) {
+            System.out.println(coche);
+        }*/
+        // System.out.println(Controlador.Controlador.obtenerCampoMo("id",1));
+        // nombre fabricante, modelo coche, nombre concesionario, dni cliente
         /*
        
        select v from Fabricante fab, Coche co, Concesionario con, Cliente cli, Venta v
@@ -106,8 +131,6 @@ public class Main {
        
        
        
-       */
-        
-        
+         */
     }
 }

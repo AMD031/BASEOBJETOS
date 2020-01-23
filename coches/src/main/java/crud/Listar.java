@@ -14,8 +14,12 @@ import com.mycompany.coches.modelo.Fabricante;
 import com.mycompany.coches.modelo.Venta;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -155,5 +159,27 @@ public class Listar {
         Conexion.getConexion().getEmf().close();
         return ventas ;
     }
-
+    
+    public static String cocheMasPopular(){
+        String resultado = "";
+        EntityManager manager2 = Conexion.getConexion().getEmf();       
+        CriteriaBuilder builder = manager2.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteria = builder.createQuery(Tuple.class);      
+        Root<Cliente> root = criteria.from(Cliente.class);
+        Expression orden =  builder.count(root);
+        
+        criteria.multiselect(root.get("cocheFavorito").get("marca"),root.get("cocheFavorito").get("modelo"), orden);
+        criteria.groupBy(root.get("cocheFavorito").get("modelo"),root.get("cocheFavorito").get("marca"));
+        criteria.orderBy(builder.desc(orden));
+        
+        List<Tuple> tuples = manager2.createQuery(criteria).setMaxResults(1).getResultList();
+       for (Tuple tuple : tuples) {
+            String marca= (String) tuple.get(0);
+            String modelo =(String) tuple.get(1);
+            Long cantidad = (Long) tuple.get(2);
+            System.out.println(marca+"  "+modelo+" "+cantidad);
+            resultado ="Marca "+marca+" modelo "+modelo+" es deseado por: "+cantidad+" persona/s";
+        }
+       return resultado;
+    }
 }

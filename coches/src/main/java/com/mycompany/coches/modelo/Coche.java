@@ -161,7 +161,7 @@ public class Coche {
 
     @Override
     public String toString() {
-        return "Coche{" + "id=" + id + ", vastidor=" + bastidor + ", modelo=" + modelo + ", color=" + color + '}';
+        return "Coche{" + "id=" + id + ", bastidor=" + bastidor + ", modelo=" + modelo + ", color=" + color + '}';
     }
     
      public void addVenta(Venta v){

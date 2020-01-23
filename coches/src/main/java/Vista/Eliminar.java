@@ -76,7 +76,7 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener,TableM
    private void inicializarTablaClientes(){
     List<Cliente>clientes = Controlador.devolverClientes();
           for (Cliente cliente :clientes) {
-            if(cliente !=null){
+            if(cliente !=null && !cliente.getNombre().equals("desconocido")){
              modeloCliente.addRow(new Object[]{cliente.getId(),
                  cliente.getNombre(),cliente.getApellidos(),
                  cliente.getLocalidad(),cliente.getDniNie(),cliente.getFecha()}); 

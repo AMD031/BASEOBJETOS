@@ -78,8 +78,8 @@ public class FormularioVenta extends javax.swing.JPanel implements MouseListener
     
    private void inicializarTablaClientes(){
     List<Cliente>clientes = Controlador.devolverClientes();
-          for (Cliente cliente :clientes) {
-            if(cliente !=null){
+          for (Cliente cliente :clientes ) {
+            if(cliente !=null && !cliente.getNombre().equals("desconocido")){
              modeloCliente.addRow(new Object[]{cliente.getId(),
                  cliente.getNombre(),cliente.getApellidos(),
                  cliente.getLocalidad(),cliente.getDniNie(),cliente.getFecha()}); 
@@ -153,7 +153,7 @@ public class FormularioVenta extends javax.swing.JPanel implements MouseListener
         Bastidor.setText("Fecha venta");
 
         Bastidor1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        Bastidor1.setText("Fecha precio");
+        Bastidor1.setText("Precio venta");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Seleciona un coche");
@@ -652,7 +652,7 @@ public class FormularioVenta extends javax.swing.JPanel implements MouseListener
     
     private void concesionarioClicado(MouseEvent e){
        
-      int id =  idTabla(modeloConcesionario,tablaCliente,e);
+      int id =  idTabla(modeloConcesionario,tablaConcesionario,e);
       if(id >0){
        this.idConcesionario = id;
        this.concesionario =Controlador.obtenerConcesioanrio(id);

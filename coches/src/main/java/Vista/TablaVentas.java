@@ -53,12 +53,11 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         initComponents();
         // Controlador.devolverVentasByCriteria(dni, concesionario, fabricante, modelo, ordenAsc)
         argumentosPorDefecto();
+        cocheMasDesado.setText("");
         construirTabla(argumentos);
         tVentas.addMouseListener(this);
         tVentas.getModel().addTableModelListener(this);
-        // busqueda = "";
-        // campoBusqueda = Utilidades.NOMBRE;
-        // modeleloResultado = (DefaultTableModel) tablaResultado.getModel();
+        
     }
 
     /**
@@ -85,6 +84,8 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         fModelo = new javax.swing.JTextField();
         checkAscendente = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        cocheMasDesado = new java.awt.Label();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -168,7 +169,7 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
                         .addComponent(btnBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(checkAscendente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fDni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,6 +208,12 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Ventas");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Coche mas deseado:");
+
+        cocheMasDesado.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        cocheMasDesado.setText("label1");
 
         jMenu2.setText("Gestionar");
 
@@ -272,22 +279,35 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(230, 230, 230)
+                        .addComponent(jLabel6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cocheMasDesado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(461, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(402, 402, 402))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(cocheMasDesado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
+
+        cocheMasDesado.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -383,6 +403,8 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
 
         Object[][] data = obtenerMatrizDatos(titulosList, argumentos);
         construirTabla(titulos, data);
+        
+        cocheMasDesado.setText(Controlador.devolverCocheMasDeseado());
     }
 
     private Object[][] obtenerMatrizDatos(ArrayList<String> titulosList, List<Object> argumentos) {
@@ -464,6 +486,7 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JCheckBox checkAscendente;
+    private java.awt.Label cocheMasDesado;
     private javax.swing.JMenuItem crearCliente;
     private javax.swing.JMenuItem crearCoche;
     private javax.swing.JMenuItem crearConsionario;
@@ -478,6 +501,7 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

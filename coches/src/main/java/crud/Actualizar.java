@@ -51,18 +51,31 @@ public class Actualizar {
         Venta venta=  manager.find(Venta.class, id);
         if(Campo == Utilidades.COCHE){     
           Coche coche =(Coche)object;
-          venta.setCoche(coche);
+          venta.getCoche().setColor(coche.getColor());
+          venta.getCoche().setBastidor(coche.getBastidor());
+          venta.getCoche().setModelo(coche.getModelo());
+          venta.getCoche().getFabricante().setCif(coche.getFabricante().getCif());
+          venta.getCoche().getFabricante().setNombre(coche.getFabricante().getNombre());
           manager.persist(venta);
         }
         
         if(Campo == Utilidades.CONCESIONARIO){     
           Concesionario concesionario =(Concesionario)object;
-          venta.setConcesionario(concesionario);
+          venta.getConcesionario().setCif(concesionario.getCif());
+          venta.getConcesionario().setLocalidad(concesionario.getLocalidad());
+          venta.getConcesionario().setNombre(concesionario.getNombre());
           manager.persist(venta);
         }
         if(Campo == Utilidades.CLIENTE){     
           Cliente cliente =(Cliente)object;
-          venta.setCliente(cliente);
+          
+          venta.getCliente().setNombre(cliente.getNombre());
+          venta.getCliente().setApellidos(cliente.getApellidos());
+          venta.getCliente().setDniNie(cliente.getDniNie());
+          venta.getCliente().setLocalidad(cliente.getLocalidad());
+          venta.getCliente().setFecha(cliente.getFecha());
+          venta.getCliente().setCocheFavorito(cliente.getCocheFavorito());
+          
           manager.persist(venta);
         }
        }   
