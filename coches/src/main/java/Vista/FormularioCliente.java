@@ -248,7 +248,7 @@ public class FormularioCliente extends javax.swing.JPanel {
         clienteEditado.setDniNie(fDni.getText());
         clienteEditado.setLocalidad(fLocalidad.getText());
         clienteEditado.setFecha(fFecha.getText());
-       
+        cocheFavorito.setId(this.cocheFavorito.getId());
         cocheFavorito.setMarca(marcaFavorito.getText());
         cocheFavorito.setModelo(modeloFavorito.getText());
         clienteEditado.setCocheFavorito(cocheFavorito);  

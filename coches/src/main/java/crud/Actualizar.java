@@ -74,7 +74,12 @@ public class Actualizar {
           venta.getCliente().setDniNie(cliente.getDniNie());
           venta.getCliente().setLocalidad(cliente.getLocalidad());
           venta.getCliente().setFecha(cliente.getFecha());
-          venta.getCliente().setCocheFavorito(cliente.getCocheFavorito());
+          
+         CocheFavorito cf =manager.find(CocheFavorito.class, cliente.getCocheFavorito().getId());
+          
+          cf.setMarca(cliente.getCocheFavorito().getMarca());
+          cf.setModelo(cliente.getCocheFavorito().getModelo());
+         
           
           manager.persist(venta);
         }

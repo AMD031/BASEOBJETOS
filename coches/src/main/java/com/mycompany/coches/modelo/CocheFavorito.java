@@ -42,7 +42,7 @@ public class CocheFavorito {
     @Column(name = "modelo")
     private String modelo;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
