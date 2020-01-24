@@ -24,8 +24,6 @@ public class Borrar {
             cliente.setDniNie("desconocido");
             cliente.setLocalidad("desconocido");
             cliente.setFecha("desconocida");
-            
-            
             manager.persist(cliente);
             //manager.remove(cliente);
             manager.getTransaction().commit();

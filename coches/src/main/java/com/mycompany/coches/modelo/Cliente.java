@@ -123,7 +123,7 @@ public class Cliente {
         this.fecha = fecha;
     }
 
-    @OneToMany (mappedBy = "cliente", cascade = CascadeType.PERSIST) 
+    @OneToMany (mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY) 
     private List<Venta> ventasCli;
     
     @PreRemove

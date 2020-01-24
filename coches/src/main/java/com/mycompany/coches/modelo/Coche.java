@@ -46,7 +46,7 @@ public class Coche {
     @Column(name = "color")
     private String color;
     
-    @OneToMany(mappedBy = "coche", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "coche", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Venta>ventas;
   
     @ManyToOne(cascade =CascadeType.ALL) 

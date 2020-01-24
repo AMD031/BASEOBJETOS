@@ -11,6 +11,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,10 +58,9 @@ public class Concesionario {
         this.localidad = localidad;
     }
 
-        @OneToMany(mappedBy="concesionario")
+        @OneToMany(cascade = CascadeType.ALL, mappedBy="concesionario",fetch = FetchType.LAZY)
         private List<Venta>ventasCon;  
-       
-        
+ 
         public void addVentaCon(Venta v){
             if(ventasCon==null){
                 ventasCon= new ArrayList<>();
