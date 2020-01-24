@@ -307,25 +307,33 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener,TableM
     }// </editor-fold>//GEN-END:initComponents
 
     private void eliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarClienteActionPerformed
-        Controlador.eliminarCliente(this.idCliente);
-         modeloCliente.removeRow(tablaCliente.getSelectionModel().getLeadSelectionIndex());
+      if(tablaCliente.getSelectionModel().getLeadSelectionIndex()>=0){
+         Controlador.eliminarCliente(this.idCliente);
+         modeloCliente.removeRow(tablaCliente.getSelectionModel().getLeadSelectionIndex());  
+      }    
     }//GEN-LAST:event_eliminarClienteActionPerformed
 
     private void eliminarConcesionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarConcesionarioActionPerformed
+       if(tablaConcesionario.getSelectionModel().getLeadSelectionIndex()>=0){
         Controlador.eliminarConcesionario(this.idConcesionario);
-        modeloConcesionario.removeRow(tablaConcesionario.getSelectionModel().getLeadSelectionIndex());
-     
+        modeloConcesionario.removeRow(tablaConcesionario.getSelectionModel().getLeadSelectionIndex());   
+       } 
     }//GEN-LAST:event_eliminarConcesionarioActionPerformed
 
     private void eliminarCocheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarCocheActionPerformed
+     if(tablaCoche.getSelectionModel().getLeadSelectionIndex()>=0){
        Controlador.eliminarCoche(this.idCoche);
-       modeloCoche.removeRow(tablaCoche.getSelectionModel().getLeadSelectionIndex());
-    
+       modeloCoche.removeRow(tablaCoche.getSelectionModel().getLeadSelectionIndex());  
+     }
     }//GEN-LAST:event_eliminarCocheActionPerformed
 
     private void eliminarFabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarFabricanteActionPerformed
-       Controlador.eliminarFabricante(this.idFabricante);
-       modeloFabricante.removeRow(tablaFabricante.getSelectionModel().getLeadSelectionIndex());
+      if(tablaFabricante.getSelectionModel().getLeadSelectionIndex()>=0){
+        modeloFabricante.removeRow(tablaFabricante.getSelectionModel().getLeadSelectionIndex()); 
+        Controlador.eliminarFabricante(this.idFabricante);
+     }  
+       
+       
     }//GEN-LAST:event_eliminarFabricanteActionPerformed
 
 

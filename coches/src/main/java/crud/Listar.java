@@ -153,9 +153,6 @@ public class Listar {
             consulta = Conexion.getConexion().getEmf().createNamedQuery("filtroAvanzadoDESC", Venta.class).setParameter("nombreFabricante", fabricante).setParameter("modeloCoche", modelo).setParameter("nombreConcesionario", concesionario).setParameter("dniCliente", dni);
         }
         List<Venta> ventas =consulta.getResultList();
-        for(Venta v : ventas){
-        System.out.println(v);
-        }
         Conexion.getConexion().getEmf().close();
         return ventas ;
     }

@@ -198,12 +198,18 @@ public class FormularioConcesionario extends javax.swing.JPanel {
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
           
+       boolean noEnBlanco = false;
+         if( !fCif.getText().equals("")
+          && !fNombre.getText().equals("")
+          && !fLocalidad.getText().equals("")){
+             noEnBlanco = true;
+         }
         
+       if(noEnBlanco){
           Concesionario concesionarioEditado = new Concesionario();
           concesionarioEditado.setCif(fCif.getText());
           concesionarioEditado.setLocalidad(fLocalidad.getText());
           concesionarioEditado.setNombre(fNombre.getText());
-        
         if(!nuevo){
           Controlador.actualizarVentaObjeto(concesionarioEditado,Utilidades.CONCESIONARIO, id);
         }
@@ -211,9 +217,11 @@ public class FormularioConcesionario extends javax.swing.JPanel {
         if(nuevo){
             Controlador.crear(Utilidades.CONCESIONARIO,concesionarioEditado );
         }
-        
-        
-        
+      }else{
+           Utilidades.errorTextoDialog("Rellena todos los campos", this);
+       }
+         
+
     }//GEN-LAST:event_guardarActionPerformed
 
 

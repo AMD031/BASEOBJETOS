@@ -5,38 +5,56 @@
  */
 package Util;
 
+import java.awt.Component;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Antonio Martínez Díaz
  */
 public class Utilidades {
-    
+
     //Variables columna ventas
     public static final int ID = 0;
     public static final int FECHA = 1;
     public static final int PRECIO = 2;
     public static final int COCHE = 3;
-    public static final int CONCESIONARIO =4;
-    public static final int CLIENTE =5;
-    public static final int ELIMINAR =6;
+    public static final int CONCESIONARIO = 4;
+    public static final int CLIENTE = 5;
+    public static final int ELIMINAR = 6;
     //--------------auxiliar---------------
-     public static final int COCHEFAVORITO = 1000;
-     public static final int FABRICANTE = 2000;
-     public static final int VENTA = 3000;
-  
-    
+    public static final int COCHEFAVORITO = 1000;
+    public static final int FABRICANTE = 2000;
+    public static final int VENTA = 3000;
 
-    
-      public static boolean esNumerico(String cadena) {
+    public static boolean esNumerico(String cadena) {
         try {
-            Integer.parseInt(cadena);
+           Float.parseFloat(cadena);
             return true;
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    public static boolean validarFecha(String fecha) {
+        try {
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+            formatoFecha.setLenient(false);
+            formatoFecha.parse(fecha);
+            if(!fecha.matches("^([0-2][0-9]|(3)[0-1])(\\-)(((0)[0-9])|((1)[0-2]))(\\-)\\d{4}$")){
+                throw new Exception(); 
+            }
+            
+        } catch (ParseException e) {
+            return false;
+        }catch(Exception e){
+            return false;
+        }
+        return true;
     }
 
     public static boolean validarNIF(String nif) {
@@ -59,8 +77,14 @@ public class Utilidades {
         }
         return correcto;
     }
+      public static void errorTextoDialog(String mensaje,Component componentePadre) {
+        JOptionPane.showMessageDialog(componentePadre,
+                mensaje,
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+
     
     
-    
-    
+
 }

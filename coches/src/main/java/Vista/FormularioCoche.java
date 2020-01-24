@@ -28,6 +28,7 @@ public class FormularioCoche extends javax.swing.JPanel {
             this.fabricante = coche.getFabricante();
         }
         volcarDatosCoche();
+        this.tituloCoche.setText("Formulario coche");
     }
 
     private void volcarDatosCoche(){
@@ -62,7 +63,7 @@ public class FormularioCoche extends javax.swing.JPanel {
     private void initComponents() {
 
         fBastidor = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        tituloCoche = new javax.swing.JLabel();
         Bastidor = new javax.swing.JLabel();
         fModelo = new javax.swing.JTextField();
         Modelo = new javax.swing.JLabel();
@@ -77,8 +78,8 @@ public class FormularioCoche extends javax.swing.JPanel {
         fNombre = new javax.swing.JTextField();
         fCif = new javax.swing.JTextField();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Nuevo Coche:");
+        tituloCoche.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        tituloCoche.setText("Nuevo Coche:");
 
         Bastidor.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Bastidor.setText("Bastidor");
@@ -188,7 +189,7 @@ public class FormularioCoche extends javax.swing.JPanel {
                                             .addComponent(fColor)
                                             .addComponent(fId, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                                        .addComponent(tituloCoche, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                                         .addGap(293, 293, 293)))
                                 .addGap(51, 51, 51)))))
                 .addContainerGap())
@@ -197,7 +198,7 @@ public class FormularioCoche extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(tituloCoche)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,15 +242,35 @@ public class FormularioCoche extends javax.swing.JPanel {
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         Coche cocheEditado = new Coche();
         Fabricante fabricanteEditado = new Fabricante();
-        cocheEditado.setModelo(fModelo.getText());
-        cocheEditado.setColor(fColor.getText());
-        cocheEditado.setBastidor(fBastidor.getText());
-
-        fabricanteEditado.setCif(fCif.getText());
-        fabricanteEditado.setNombre(fNombre.getText());
+         boolean noEnBlanco = false;
+        if(!fModelo.getText().equals("")
+        && !fColor.getText().equals("")
+        && !fBastidor.getText().equals("")
+        && !fCif.getText().equals("")
+        && !fNombre.getText().equals("")){
+              noEnBlanco = true;
+        }
+         
         
-        cocheEditado.setFabricante(fabricanteEditado);    
-        Controlador.actualizarVentaObjeto(cocheEditado, Utilidades.COCHE, this.id);   
+        
+       if(noEnBlanco){
+            cocheEditado.setModelo(fModelo.getText());
+            cocheEditado.setColor(fColor.getText());
+            cocheEditado.setBastidor(fBastidor.getText());
+
+            fabricanteEditado.setCif(fCif.getText());
+            fabricanteEditado.setNombre(fNombre.getText());
+
+            cocheEditado.setFabricante(fabricanteEditado);    
+            Controlador.actualizarVentaObjeto(cocheEditado, Utilidades.COCHE, this.id);   
+          }else{
+            Utilidades.errorTextoDialog("Rellena todos los campos", this);
+          }
+        
+        
+        
+        
+        
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void fIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fIdActionPerformed
@@ -286,8 +307,8 @@ public class FormularioCoche extends javax.swing.JPanel {
     private javax.swing.JTextField fId;
     private javax.swing.JTextField fModelo;
     private javax.swing.JTextField fNombre;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel tituloCoche;
     // End of variables declaration//GEN-END:variables
 }

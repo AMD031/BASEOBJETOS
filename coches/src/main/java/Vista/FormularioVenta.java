@@ -548,17 +548,36 @@ public class FormularioVenta extends javax.swing.JPanel implements MouseListener
     }//GEN-LAST:event_fCifFabricanteActionPerformed
 
     private void guardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarVentaActionPerformed
+          Boolean fechaCorrecta= Utilidades.validarFecha(fVenta.getText());
+          boolean precioCorrecto= Utilidades.esNumerico(fPrecioVenta.getText());
+          boolean campoRellenos =false;
+
            Venta venta = new Venta();           
            venta.setFecha(fVenta.getText());
-           venta.setPrecio(Float.parseFloat(fPrecioVenta.getText()));
+           if(Utilidades.esNumerico(fPrecioVenta.getText())){
+             venta.setPrecio(Float.parseFloat(fPrecioVenta.getText()));  
+           }
+
             
            if(this.coche !=null && this.cliente!=null && this.concesionario!=null){
-              Controlador.crearVenta(venta, idCoche, idConcesionario, idCliente);
-           
-           
-           
+                  campoRellenos = true;
+           } 
+         
+           if(campoRellenos && fechaCorrecta ){
+                Controlador.crearVenta(venta, idCoche, idConcesionario, idCliente); 
+           }else{
+               
+               if(!campoRellenos){
+                  Utilidades.errorTextoDialog("Rellena todos los campos", this);
+               }else  if(!fechaCorrecta){
+                   Utilidades.errorTextoDialog("Fecha incorrecta", this);
+               }else if(precioCorrecto){
+                  Utilidades.errorTextoDialog("Introduce un numero para el precio", this);
+               }
+               
+               
+                 
            }
-           
            
            
          

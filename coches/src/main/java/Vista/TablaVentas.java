@@ -40,7 +40,7 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
      * Creates new form TablaVentas
      */
     private void argumentosPorDefecto() {
-  
+
         this.argumentos = new ArrayList<>();
         this.argumentos.add("");
         this.argumentos.add("");
@@ -57,7 +57,7 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         construirTabla(argumentos);
         tVentas.addMouseListener(this);
         tVentas.getModel().addTableModelListener(this);
-        
+
     }
 
     /**
@@ -372,18 +372,18 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         String fabricante = fFabricante.getText();
         String modelo = fModelo.getText();
         boolean ordenAsc = checkAscendente.isSelected();
-        
+
         System.out.println(ordenAsc);
         this.argumentos.set(0, dni);
         this.argumentos.set(1, concesionario);
         this.argumentos.set(2, fabricante);
         this.argumentos.set(3, modelo);
         this.argumentos.set(4, ordenAsc);
-        
+
         construirTabla(this.argumentos);
         restaurarEscucha();
-        
-    
+
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     public void construirTabla(List<Object> argumentos) {
@@ -403,25 +403,25 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
 
         Object[][] data = obtenerMatrizDatos(titulosList, argumentos);
         construirTabla(titulos, data);
-        
+
         cocheMasDesado.setText(Controlador.devolverCocheMasDeseado());
     }
 
     private Object[][] obtenerMatrizDatos(ArrayList<String> titulosList, List<Object> argumentos) {
         // Controlador.devolverVentasByCriteria(dni, concesionario, fabricante, modelo, ordenAsc)
-        
-       List<Venta> ventasResultado=Controlador.devolverVentasByCriteria(
-                (String)argumentos.get(0),
-                (String)argumentos.get(1),
+
+        List<Venta> ventasResultado = Controlador.devolverVentasByCriteria(
+                (String) argumentos.get(0),
+                (String) argumentos.get(1),
                 (String) argumentos.get(2),
                 (String) argumentos.get(3),
-                (boolean)argumentos.get(4));
+                (boolean) argumentos.get(4));
         String informacion[][] = new String[ventasResultado.size()][titulosList.size()];
-        
+
         for (int x = 0; x < informacion.length; x++) {
-            informacion[x][Utilidades.ID] = ventasResultado.get(x).getId()+"";
-            informacion[x][Utilidades.FECHA] = ventasResultado.get(x).getFecha()+"";
-            informacion[x][Utilidades.PRECIO] = ventasResultado.get(x).getPrecio()+"";
+            informacion[x][Utilidades.ID] = ventasResultado.get(x).getId() + "";
+            informacion[x][Utilidades.FECHA] = ventasResultado.get(x).getFecha() + "";
+            informacion[x][Utilidades.PRECIO] = ventasResultado.get(x).getPrecio() + "";
             informacion[x][Utilidades.COCHE] = "COCHE";
             informacion[x][Utilidades.CONCESIONARIO] = "CONCESIONARIO";
             informacion[x][Utilidades.CLIENTE] = "CLIENTE";
@@ -596,29 +596,29 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         Controlador.actualizarMo(Id, (Integer.valueOf(e.getColumn())), cambio);
     }
 
-    private void errorTextoDialog(String mensaje) {
-        JOptionPane.showMessageDialog(this,
-                mensaje,
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-    }
+  
 
     @Override
     public void tableChanged(TableModelEvent e) {
         String Cambio = (String) modelo.getValueAt(e.getFirstRow(), e.getColumn());
         if (e.getColumn() == Utilidades.FECHA) {
-            if (true) {
+            if (Utilidades.validarFecha(Cambio)) {
                 actualizaCelda(e);
             } else {
-                errorTextoDialog("error en datos");
+                Utilidades.errorTextoDialog("Fecha erronea",this);
                 construirTabla(this.argumentos);
                 restaurarEscucha();
             }
         } else if (e.getColumn() == Utilidades.PRECIO) {
-            actualizaCelda(e);
+            if (Utilidades.esNumerico(Cambio)) {
+                actualizaCelda(e);
+            } else {
+                Utilidades.errorTextoDialog("No se puede introducir letras en este campo.",this);
+                construirTabla(this.argumentos);
+                restaurarEscucha();
+            }
         }
 
     }
-
 
 }

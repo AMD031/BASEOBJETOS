@@ -8,7 +8,6 @@ package Vista;
 import Controlador.Controlador;
 import com.mycompany.coches.modelo.Coche;
 import com.mycompany.coches.modelo.Fabricante;
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -226,15 +225,25 @@ public class FormularioNuevoCoche extends javax.swing.JPanel implements MouseLis
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         Coche cocheEditado = new Coche();
-        //Fabricante fabricanteEditado = new Fabricante();
-        cocheEditado.setModelo(fModelo.getText());
-        cocheEditado.setColor(fColor.getText());
-        cocheEditado.setBastidor(fBastidor.getText());
+     
+        boolean noEnBlanco = false;
+        if(!fModelo.getText().equals("")
+        && !fColor.getText().equals("")
+        && !fBastidor.getText().equals("")
+        && !fCif.getText().equals("")
+        && !fNombre.getText().equals("")){
+              noEnBlanco = true;
+        }
         
-        //fabricanteEditado.setCif(fCif.getText());
-        //fabricanteEditado.setNombre(fNombre.getText());
-        
-        Controlador.crearCoche(cocheEditado, this.idFabricante);
+        if(noEnBlanco){
+            cocheEditado.setModelo(fModelo.getText());
+            cocheEditado.setColor(fColor.getText());
+            cocheEditado.setBastidor(fBastidor.getText());
+            Controlador.crearCoche(cocheEditado, this.idFabricante);
+        }else{
+            Util.Utilidades.errorTextoDialog("Rellena todos los campos", this);
+        }
+       
 
     }//GEN-LAST:event_GuardarActionPerformed
 

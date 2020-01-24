@@ -36,7 +36,7 @@ public class FormularioFabricante extends javax.swing.JPanel {
         fNombre = new javax.swing.JTextField();
         fCif = new javax.swing.JTextField();
         Guardar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        TituloFabricante = new javax.swing.JLabel();
 
         nCif.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         nCif.setText("Cif");
@@ -63,8 +63,8 @@ public class FormularioFabricante extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Editar fabricante coche:");
+        TituloFabricante.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        TituloFabricante.setText("Editar fabricante coche:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -91,14 +91,14 @@ public class FormularioFabricante extends javax.swing.JPanel {
                                     .addComponent(fCif)
                                     .addComponent(fNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(53, 53, 53))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(TituloFabricante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(52, 52, 52)
-                .addComponent(jLabel3)
+                .addComponent(TituloFabricante)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nCif)
@@ -122,19 +122,32 @@ public class FormularioFabricante extends javax.swing.JPanel {
     }//GEN-LAST:event_fCifActionPerformed
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+         boolean noEnBlanco = false;
+         if( !fCif.getText().equals("")
+          && !fNombre.getText().equals("")){
+             noEnBlanco = true;
+         }
+         
+      if(noEnBlanco){
         Fabricante fabricanteEditado = new Fabricante();
         fabricanteEditado.setCif(fCif.getText());
         fabricanteEditado.setNombre(fNombre.getText());
-        Controlador.crear(Util.Utilidades.FABRICANTE,fabricanteEditado);
+        Controlador.crear(Util.Utilidades.FABRICANTE,fabricanteEditado); 
+      }else{
+          Util.Utilidades.errorTextoDialog("Rellena todos los campos", this);
+      }  
+       
+        
+        
     }//GEN-LAST:event_GuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Color1;
     private javax.swing.JButton Guardar;
+    private javax.swing.JLabel TituloFabricante;
     private javax.swing.JTextField fCif;
     private javax.swing.JTextField fNombre;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel nCif;
     // End of variables declaration//GEN-END:variables
 }

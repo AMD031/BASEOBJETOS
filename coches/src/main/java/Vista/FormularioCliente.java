@@ -5,7 +5,6 @@
  */
 package Vista;
 
-
 import Controlador.Controlador;
 import Util.Utilidades;
 import com.mycompany.coches.modelo.Cliente;
@@ -17,6 +16,7 @@ import com.mycompany.coches.modelo.Venta;
  * @author Antonio Martínez Díaz
  */
 public class FormularioCliente extends javax.swing.JPanel {
+
     /**
      * Creates new form FormularioCliente
      */
@@ -24,52 +24,48 @@ public class FormularioCliente extends javax.swing.JPanel {
     private Cliente cliente;
     private CocheFavorito cocheFavorito;
     private boolean nuevo;
-    public FormularioCliente(int id) {
-      initComponents();
-      this.id = id;
-      inicializaObjetos();
-      volcarDatosCoche();
-      nuevo = false;
-  
-    }
-    
-    
-    public FormularioCliente() {
-      initComponents();
-      this.fIdCliente.setVisible(false);
-      this.idLabel.setVisible(false);
-      nuevo = true;
-    }
-    private  void inicializaObjetos(){
-       Venta venta = Controlador.obtenerVenta(id);
-       if(venta !=null){
-         this.cliente =  Controlador.obtenerVenta(id).getCliente();  
-       }       
-       if(this.cliente!=null){
-           this.cocheFavorito = cliente.getCocheFavorito();
-       }        
-    }
-    private void volcarDatosCoche(){
-  
-      if(cliente != null){
-       fIdCliente.setText(Integer.toString(cliente.getId()));
-       fNombre.setText(cliente.getNombre());
-       fApellidos.setText(cliente.getApellidos());
-       fLocalidad.setText(cliente.getLocalidad());
-       fDni.setText(cliente.getDniNie());
-       fFecha.setText(cliente.getFecha());
-       marcaFavorito.setText(cliente.getCocheFavorito().getMarca());
-       modeloFavorito.setText(cliente.getCocheFavorito().getModelo());
-       
-      }   
-  
-  
-      
-      
-    }
-    
 
-    
+    public FormularioCliente(int id) {
+        initComponents();
+        this.id = id;
+        inicializaObjetos();
+        volcarDatosCoche();
+        nuevo = false;
+
+    }
+
+    public FormularioCliente() {
+        initComponents();
+        this.fIdCliente.setVisible(false);
+        this.idLabel.setVisible(false);
+        this.tituloCliente.setText("Nuevo cliente: ");
+        nuevo = true;
+    }
+
+    private void inicializaObjetos() {
+        Venta venta = Controlador.obtenerVenta(id);
+        if (venta != null) {
+            this.cliente = Controlador.obtenerVenta(id).getCliente();
+        }
+        if (this.cliente != null) {
+            this.cocheFavorito = cliente.getCocheFavorito();
+        }
+    }
+
+    private void volcarDatosCoche() {
+        if (cliente != null) {
+            fIdCliente.setText(Integer.toString(cliente.getId()));
+            fNombre.setText(cliente.getNombre());
+            fApellidos.setText(cliente.getApellidos());
+            fLocalidad.setText(cliente.getLocalidad());
+            fDni.setText(cliente.getDniNie());
+            fFecha.setText(cliente.getFecha());
+            marcaFavorito.setText(cliente.getCocheFavorito().getMarca());
+            modeloFavorito.setText(cliente.getCocheFavorito().getModelo());
+
+        }
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,7 +78,7 @@ public class FormularioCliente extends javax.swing.JPanel {
 
         idLabel = new javax.swing.JLabel();
         fIdCliente = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        tituloCliente = new javax.swing.JLabel();
         fNombre = new javax.swing.JTextField();
         Bastidor = new javax.swing.JLabel();
         Bastidor1 = new javax.swing.JLabel();
@@ -111,8 +107,8 @@ public class FormularioCliente extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Editar Cliente:");
+        tituloCliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        tituloCliente.setText("Editar Cliente:");
 
         Bastidor.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Bastidor.setText("Nombre");
@@ -166,12 +162,10 @@ public class FormularioCliente extends javax.swing.JPanel {
                             .addComponent(modeloFavorito))
                         .addGap(140, 140, 140))
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tituloCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(idLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addComponent(idLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Bastidor)
@@ -194,7 +188,7 @@ public class FormularioCliente extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabel1)
+                .addComponent(tituloCliente)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,36 +230,62 @@ public class FormularioCliente extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fIdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fIdClienteActionPerformed
-    Controlador.actualizarMo(id, WIDTH, TOOL_TIP_TEXT_KEY);
+        Controlador.actualizarMo(id, WIDTH, TOOL_TIP_TEXT_KEY);
     }//GEN-LAST:event_fIdClienteActionPerformed
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-    
+
         Cliente clienteEditado = new Cliente();
         CocheFavorito cocheFavorito = new CocheFavorito();
+        boolean noEnBlanco = false;
+        boolean dniValido = false;
+        
+        if (!fNombre.getText().equals("")
+         && !fApellidos.getText().equals("")
+         && !fDni.getText().equals("")
+         && !fLocalidad.getText().equals("")
+         && !fFecha.getText().equals("")
+         && !marcaFavorito.getText().equals("")
+         && !modeloFavorito.getText().equals("")) {
+            noEnBlanco = true;
+        }
+        
+        if(Utilidades.validarNIF(fDni.getText())){
+            dniValido = true;
+        }
+        
+    
+   
         clienteEditado.setNombre(fNombre.getText());
         clienteEditado.setApellidos(fApellidos.getText());
         clienteEditado.setDniNie(fDni.getText());
         clienteEditado.setLocalidad(fLocalidad.getText());
         clienteEditado.setFecha(fFecha.getText());
-        
+
         cocheFavorito.setMarca(marcaFavorito.getText());
         cocheFavorito.setModelo(modeloFavorito.getText());
-        clienteEditado.setCocheFavorito(cocheFavorito);  
-      
-        
-        
-        if(nuevo){
-            Controlador.crear(Utilidades.CLIENTE,  clienteEditado);
-      
-        }
-
-        if(!nuevo){
-          cocheFavorito.setId(this.cocheFavorito.getId());
-          Controlador.actualizarVentaObjeto(clienteEditado,Utilidades.CLIENTE, id);
-        }
+        clienteEditado.setCocheFavorito(cocheFavorito);
        
         
+        if (noEnBlanco && dniValido) {
+            if (nuevo) {
+
+                Controlador.crear(Utilidades.CLIENTE, clienteEditado);
+             }
+             if (!nuevo) {
+                cocheFavorito.setId(this.cocheFavorito.getId());
+                Controlador.actualizarVentaObjeto(clienteEditado, Utilidades.CLIENTE, id);
+            }
+
+          
+        } else {
+           if(!noEnBlanco)
+            Utilidades.errorTextoDialog("Rellena todos los campos", this);
+            }
+             if(!dniValido){
+             Utilidades.errorTextoDialog("Dni no valido", this);
+          }
+
     }//GEN-LAST:event_guardarActionPerformed
 
 
@@ -285,9 +305,9 @@ public class FormularioCliente extends javax.swing.JPanel {
     private javax.swing.JTextField fNombre;
     private javax.swing.JButton guardar;
     private javax.swing.JLabel idLabel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField marcaFavorito;
     private javax.swing.JTextField modeloFavorito;
+    private javax.swing.JLabel tituloCliente;
     // End of variables declaration//GEN-END:variables
 }
