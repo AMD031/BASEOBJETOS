@@ -323,7 +323,6 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener, Table
                 Util.Utilidades.errorTextoDialog("El concesionario es usado por una venta no se puede borrar.", this);
             } else {
                 Controlador.eliminarConcesionario(this.idConcesionario);
-                System.out.println(idConcesionario);
                 modeloConcesionario.removeRow(tablaConcesionario.getSelectionModel().getLeadSelectionIndex());
             }
         }
@@ -344,7 +343,7 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener, Table
     private void eliminarFabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarFabricanteActionPerformed
         if (tablaFabricante.getSelectionModel().getLeadSelectionIndex() >= 0) {
             if (Controlador.cantidadCocheFabricante(this.idFabricante)>0) {
-                    Util.Utilidades.errorTextoDialog("El fabricante es usado por una coche no se puede borrar.", this);  
+                Util.Utilidades.errorTextoDialog("El fabricante es usado por una coche no se puede borrar.", this);  
             } else {
                 modeloFabricante.removeRow(tablaFabricante.getSelectionModel().getLeadSelectionIndex());
                 Controlador.eliminarFabricante(this.idFabricante);
@@ -390,7 +389,7 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener, Table
     }
 
     private void concesionarioClicado(MouseEvent e) {
-        int id = idTabla(modeloConcesionario, tablaCliente, e);
+        int id = idTabla(modeloConcesionario, tablaConcesionario, e);
         if (id > 0) {
             this.idConcesionario = id;
         }

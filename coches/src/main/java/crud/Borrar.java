@@ -85,7 +85,7 @@ public class Borrar {
              if(cantidad >0){
                throw  new Exception("concesionario en uso");
              }
-             manager.getTransaction().begin();
+            manager.getTransaction().begin();
             manager.remove(manager.find(Concesionario.class, id));
             manager.getTransaction().commit();
         } catch (Exception e) {

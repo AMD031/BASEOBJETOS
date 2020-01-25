@@ -5,20 +5,9 @@
  */
 package com.mycompany.coches.modelo;
 
-import static com.objectdb.o.MSS.cb;
-import static com.objectdb.o.MSS.cq;
-import crud.Listar;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.Tuple;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Root;
+
 
 /**
  *
@@ -31,8 +20,8 @@ public class Main {
         EntityManager manager = Conexion.getConexion().getEmf();
         manager.getTransaction().begin();
 
-        Cliente cli1 = new Cliente("Pedro", "Porro", "Cordoba", "123456789A", "01-01-1990");
-        Cliente cli2 = new Cliente("Maria", "Prieto", "MAdrid", "123456789B", "01-01-1999");
+        Cliente cli1 = new Cliente("Pedro", "Porro", "Cordoba", "12345678Z", "01-01-1990");
+        Cliente cli2 = new Cliente("Maria", "Prieto", "MAdrid", "87654321X", "01-01-1999");
        
         Concesionario con1 = new Concesionario("123A", "Concesionario uno", "Cordoba");
         
