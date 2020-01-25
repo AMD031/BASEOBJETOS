@@ -19,7 +19,10 @@ import javax.persistence.Table;
 @NamedQueries({
 @NamedQuery(name="recupearTodoVenta", query="select c from Venta c"),
 @NamedQuery(name="filtroAvanzadoASC", query="select v from Fabricante fab, Coche co, Concesionario con, Cliente cli, Venta v where fab.id=co.fabricante.id AND co.id=v.coche.id AND cli.id=v.cliente.id AND con.id=v.concesionario.id AND fab.nombre LIKE CONCAT('%',:nombreFabricante,'%') AND co.modelo LIKE CONCAT('%',:modeloCoche,'%') AND con.nombre LIKE CONCAT('%',:nombreConcesionario,'%') AND cli.dniNie LIKE CONCAT('%',:dniCliente,'%') ORDER BY v.precio ASC"),
-@NamedQuery(name="filtroAvanzadoDESC", query="select v from Fabricante fab, Coche co, Concesionario con, Cliente cli, Venta v where fab.id=co.fabricante.id AND co.id=v.coche.id AND cli.id=v.cliente.id AND con.id=v.concesionario.id AND fab.nombre LIKE CONCAT('%',:nombreFabricante,'%') AND co.modelo LIKE CONCAT('%',:modeloCoche,'%') AND con.nombre LIKE CONCAT('%',:nombreConcesionario,'%') AND cli.dniNie LIKE CONCAT('%',:dniCliente,'%') ORDER BY v.precio DESC")
+@NamedQuery(name="filtroAvanzadoDESC", query="select v from Fabricante fab, Coche co, Concesionario con, Cliente cli, Venta v where fab.id=co.fabricante.id AND co.id=v.coche.id AND cli.id=v.cliente.id AND con.id=v.concesionario.id AND fab.nombre LIKE CONCAT('%',:nombreFabricante,'%') AND co.modelo LIKE CONCAT('%',:modeloCoche,'%') AND con.nombre LIKE CONCAT('%',:nombreConcesionario,'%') AND cli.dniNie LIKE CONCAT('%',:dniCliente,'%') ORDER BY v.precio DESC"),
+@NamedQuery(name = "cantidaVentaCocheId", query = "SELECT v from Venta v inner join v.coche c  where c.id =:idCoche"),
+@NamedQuery(name = "cantidaVentaConcesionarioId",query = "SELECT v from Venta v inner join v.concesionario c  where c.id = :idConcesionario"),
+@NamedQuery(name = "cantidadVentaClienteId",query = "SELECT v from Venta v inner join v.cliente c where v.cliente.id = :idCliente")
 })
 
 
@@ -36,16 +39,16 @@ public class Venta implements Serializable{
     private int id;
     private String fecha;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
     
-    @ManyToOne(cascade = CascadeType.ALL) 
+    @ManyToOne
     @JoinColumn(name = "id_concesionario")
     private Concesionario concesionario;
     
     
-    @ManyToOne(cascade = CascadeType.ALL) 
+    @ManyToOne
     @JoinColumn(name = "id_coche")
     private Coche coche;
     

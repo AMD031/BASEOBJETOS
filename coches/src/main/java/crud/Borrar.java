@@ -15,33 +15,41 @@ public class Borrar {
 
     //Borrar cliente
     public static boolean bClientePorId(int id) {
-        EntityManager manager = Conexion.getConexion().getEmf();
-        try {
-            manager.getTransaction().begin();
-            Cliente cliente =manager.find(Cliente.class, id);
-            cliente.setNombre("desconocido");
-            cliente.setApellidos("desconocido");
-            cliente.setDniNie("desconocido");
-            cliente.setLocalidad("desconocido");
-            cliente.setFecha("desconocida");
-            manager.persist(cliente);
-            //manager.remove(cliente);
-            manager.getTransaction().commit();
-        } catch (Exception e) {
-            manager.getTransaction().rollback();
+        int cantidad = Listar.cantidadClienteVenta(id);
+      
+            EntityManager manager = Conexion.getConexion().getEmf();
+            try {
+                 if(cantidad >0){
+                   throw  new Exception("cliente en uso");
+                 }
+                manager.getTransaction().begin(); 
+                Cliente cliente =manager.find(Cliente.class, id);
+                manager.remove(cliente);      
+                manager.getTransaction().commit();
+            } catch (Exception e) {
+                manager.getTransaction().rollback();
+                manager.close();
+                return false;
+            }
             manager.close();
-            return false;
-        }
-        manager.close();
+       
+        
+        
         return true;
     }
 
     //Borrar coche
     public static boolean bCochePorId(int id) {
+        int cantidad =Listar.cantidadVentaCocheId(id);
         EntityManager manager = Conexion.getConexion().getEmf();
         try {
+            if(cantidad >0){
+               throw  new Exception("coche en uso");
+             }
             manager.getTransaction().begin();
-            manager.remove(manager.find(Coche.class, id));
+            Coche coche  =manager.find(Coche.class, id);
+            coche.setFabricante(null);
+            manager.remove(coche);
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -70,9 +78,14 @@ public class Borrar {
 
     //Borrar Concesionario
     public static boolean bConcesionarioPorId(int id) {
+        int cantidad = Listar.cantidadVentaConcesionarioId(id);
+        System.out.println(cantidad);
         EntityManager manager = Conexion.getConexion().getEmf();
         try {
-            manager.getTransaction().begin();
+             if(cantidad >0){
+               throw  new Exception("concesionario en uso");
+             }
+             manager.getTransaction().begin();
             manager.remove(manager.find(Concesionario.class, id));
             manager.getTransaction().commit();
         } catch (Exception e) {
@@ -86,8 +99,12 @@ public class Borrar {
 
     //Borrar fabricante
     public static boolean bFabricantePorId(int id) {
+       int cantidad =Listar.cantidadCocheFabricante(id);
         EntityManager manager = Conexion.getConexion().getEmf();
         try {
+             if(cantidad >0){
+               throw  new Exception("Fabricante en uso");
+             }
             manager.getTransaction().begin();
             manager.remove(manager.find(Fabricante.class, id));
             manager.getTransaction().commit();

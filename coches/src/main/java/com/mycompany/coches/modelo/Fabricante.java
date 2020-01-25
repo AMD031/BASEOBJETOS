@@ -27,7 +27,9 @@ import javax.persistence.Table;
 
 @NamedQueries({
 @NamedQuery(name="recupearTodoFabricante", query="select c from Fabricante c"),
-@NamedQuery(name="recupearTodoFabricanteSinrepetir", query="select  DISTINCT c from Fabricante c")  
+@NamedQuery(name="recupearTodoFabricanteSinrepetir", query="select  DISTINCT c from Fabricante c"),
+
+        
 })
 
 @Entity

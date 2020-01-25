@@ -28,11 +28,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-          EntityManager manager = Conexion.getConexion().getEmf();
+        EntityManager manager = Conexion.getConexion().getEmf();
         manager.getTransaction().begin();
 
-        Cliente cli1 = new Cliente("Pedro", "Porro", "Cordoba", "123456789A", "1-1-1990");
-        Cliente cli2 = new Cliente("Maria", "Prieto", "MAdrid", "123456789B", "1-1-1999");
+        Cliente cli1 = new Cliente("Pedro", "Porro", "Cordoba", "123456789A", "01-01-1990");
+        Cliente cli2 = new Cliente("Maria", "Prieto", "MAdrid", "123456789B", "01-01-1999");
        
         Concesionario con1 = new Concesionario("123A", "Concesionario uno", "Cordoba");
         

@@ -22,7 +22,8 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Antonio Martínez Díaz
  */
-public class Eliminar extends javax.swing.JPanel implements MouseListener,TableModelListener{
+public class Eliminar extends javax.swing.JPanel implements MouseListener, TableModelListener {
+
     private DefaultTableModel modeloCliente;
     private DefaultTableModel modeloConcesionario;
     private DefaultTableModel modeloCoche;
@@ -37,10 +38,10 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener,TableM
      */
     public Eliminar() {
         initComponents();
-        modeloCoche  = (DefaultTableModel)tablaCoche.getModel();
-        modeloConcesionario = (DefaultTableModel)tablaConcesionario.getModel();
-        modeloCliente = (DefaultTableModel)tablaCliente.getModel();
-        modeloFabricante  = (DefaultTableModel)tablaFabricante.getModel();
+        modeloCoche = (DefaultTableModel) tablaCoche.getModel();
+        modeloConcesionario = (DefaultTableModel) tablaConcesionario.getModel();
+        modeloCliente = (DefaultTableModel) tablaCliente.getModel();
+        modeloFabricante = (DefaultTableModel) tablaFabricante.getModel();
         this.tablaCliente.addMouseListener(this);
         this.tablaConcesionario.addMouseListener(this);
         this.tablaCoche.addMouseListener(this);
@@ -49,51 +50,50 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener,TableM
         this.inicializarTablaConcesionarios();
         this.inicializarTablaClientes();
         this.inicializarTablaFabricante();
-        this.idCliente=0;
-        this.idCoche=0;
-        this.idConcesionario=0;
-        this.idFabricante =0;
+        this.idCliente = 0;
+        this.idCoche = 0;
+        this.idConcesionario = 0;
+        this.idFabricante = 0;
     }
 
-     private void inicializarTablaCoches() {
-    List<Coche>coches = Controlador.devolverCoches();
-          for (Coche coche : coches) {
-            if(coche !=null){
-               modeloCoche.addRow(new Object[]{coche.getId(),coche.getBastidor(),coche.getModelo(),coche.getColor()}); 
+    private void inicializarTablaCoches() {
+        List<Coche> coches = Controlador.devolverCoches();
+        for (Coche coche : coches) {
+            if (coche != null) {
+                modeloCoche.addRow(new Object[]{coche.getId(), coche.getBastidor(), coche.getModelo(), coche.getColor()});
             }
-        }       
+        }
     }
-    
-   private void inicializarTablaConcesionarios(){
-    List<Concesionario>concesionarios = Controlador.devolverConcesionarios();
-          for (Concesionario concesionario :concesionarios) {
-            if(concesionario!=null){
-               modeloConcesionario.addRow(new Object[]{concesionario.getId(),concesionario.getCif(),concesionario.getLocalidad(),concesionario.getNombre()}); 
+
+    private void inicializarTablaConcesionarios() {
+        List<Concesionario> concesionarios = Controlador.devolverConcesionarios();
+        for (Concesionario concesionario : concesionarios) {
+            if (concesionario != null) {
+                modeloConcesionario.addRow(new Object[]{concesionario.getId(), concesionario.getCif(), concesionario.getLocalidad(), concesionario.getNombre()});
             }
-        }       
+        }
     }
-    
-   private void inicializarTablaClientes(){
-    List<Cliente>clientes = Controlador.devolverClientes();
-          for (Cliente cliente :clientes) {
-            if(cliente !=null && !cliente.getNombre().equals("desconocido")){
-             modeloCliente.addRow(new Object[]{cliente.getId(),
-                 cliente.getNombre(),cliente.getApellidos(),
-                 cliente.getLocalidad(),cliente.getDniNie(),cliente.getFecha()}); 
+
+    private void inicializarTablaClientes() {
+        List<Cliente> clientes = Controlador.devolverClientes();
+        for (Cliente cliente : clientes) {
+            if (cliente != null) {
+                modeloCliente.addRow(new Object[]{cliente.getId(),
+                    cliente.getNombre(), cliente.getApellidos(),
+                    cliente.getLocalidad(), cliente.getDniNie(), cliente.getFecha()});
             }
-        }       
+        }
     }
-    
+
     private void inicializarTablaFabricante() {
-    List<Fabricante>fabricantes = Controlador.devolverFabricantesSinRepetir();
-          for ( Fabricante fabricante : fabricantes) {
-            if(fabricante !=null){
-               modeloFabricante.addRow(new Object[]{fabricante.getId(),fabricante.getCif(),fabricante.getNombre()}); 
+        List<Fabricante> fabricantes = Controlador.devolverFabricantesSinRepetir();
+        for (Fabricante fabricante : fabricantes) {
+            if (fabricante != null) {
+                modeloFabricante.addRow(new Object[]{fabricante.getId(), fabricante.getCif(), fabricante.getNombre()});
             }
-        } 
+        }
     }
-    
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -307,33 +307,50 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener,TableM
     }// </editor-fold>//GEN-END:initComponents
 
     private void eliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarClienteActionPerformed
-      if(tablaCliente.getSelectionModel().getLeadSelectionIndex()>=0){
-         Controlador.eliminarCliente(this.idCliente);
-         modeloCliente.removeRow(tablaCliente.getSelectionModel().getLeadSelectionIndex());  
-      }    
+        if (tablaCliente.getSelectionModel().getLeadSelectionIndex() >= 0) {
+           if (Controlador.cantidadClienteVenta(this.idCliente)>0) {
+                 Util.Utilidades.errorTextoDialog("El cliente es usado por una venta no se puede borrar.", this);
+            } else {
+               Controlador.eliminarCliente(this.idCliente);
+               modeloCliente.removeRow(tablaCliente.getSelectionModel().getLeadSelectionIndex());
+         }
+        }
     }//GEN-LAST:event_eliminarClienteActionPerformed
 
     private void eliminarConcesionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarConcesionarioActionPerformed
-       if(tablaConcesionario.getSelectionModel().getLeadSelectionIndex()>=0){
-        Controlador.eliminarConcesionario(this.idConcesionario);
-        modeloConcesionario.removeRow(tablaConcesionario.getSelectionModel().getLeadSelectionIndex());   
-       } 
+        if (tablaConcesionario.getSelectionModel().getLeadSelectionIndex() >= 0) {
+            if (Controlador.cantidaVentaConcesionarioId(idConcesionario) > 0) {
+                Util.Utilidades.errorTextoDialog("El concesionario es usado por una venta no se puede borrar.", this);
+            } else {
+                Controlador.eliminarConcesionario(this.idConcesionario);
+                System.out.println(idConcesionario);
+                modeloConcesionario.removeRow(tablaConcesionario.getSelectionModel().getLeadSelectionIndex());
+            }
+        }
     }//GEN-LAST:event_eliminarConcesionarioActionPerformed
 
     private void eliminarCocheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarCocheActionPerformed
-     if(tablaCoche.getSelectionModel().getLeadSelectionIndex()>=0){
-       Controlador.eliminarCoche(this.idCoche);
-       modeloCoche.removeRow(tablaCoche.getSelectionModel().getLeadSelectionIndex());  
-     }
+        if (tablaCoche.getSelectionModel().getLeadSelectionIndex() >= 0) {
+            if (Controlador.cantidaVentaCocheId(this.idCoche)>0) {
+                Util.Utilidades.errorTextoDialog("El coche es usado por una venta no se puede borrar.", this);
+            } else {
+                Controlador.eliminarCoche(this.idCoche);
+                modeloCoche.removeRow(tablaCoche.getSelectionModel().getLeadSelectionIndex());
+            }
+        }
+
     }//GEN-LAST:event_eliminarCocheActionPerformed
 
     private void eliminarFabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarFabricanteActionPerformed
-      if(tablaFabricante.getSelectionModel().getLeadSelectionIndex()>=0){
-        modeloFabricante.removeRow(tablaFabricante.getSelectionModel().getLeadSelectionIndex()); 
-        Controlador.eliminarFabricante(this.idFabricante);
-     }  
-       
-       
+        if (tablaFabricante.getSelectionModel().getLeadSelectionIndex() >= 0) {
+            if (Controlador.cantidadCocheFabricante(this.idFabricante)>0) {
+                    Util.Utilidades.errorTextoDialog("El fabricante es usado por una coche no se puede borrar.", this);  
+            } else {
+                modeloFabricante.removeRow(tablaFabricante.getSelectionModel().getLeadSelectionIndex());
+                Controlador.eliminarFabricante(this.idFabricante);
+            }
+
+        }
     }//GEN-LAST:event_eliminarFabricanteActionPerformed
 
 
@@ -358,90 +375,83 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener,TableM
     private javax.swing.JTable tablaFabricante;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-    
-       private int idTabla(DefaultTableModel modelo,JTable tabla,MouseEvent e) {
-       int fila = tabla.rowAtPoint(e.getPoint()); 
-       int Id = (int) modelo.getValueAt(fila, 0);
-       return Id;
+    private int idTabla(DefaultTableModel modelo, JTable tabla, MouseEvent e) {
+        int fila = tabla.rowAtPoint(e.getPoint());
+        int Id = (int) modelo.getValueAt(fila, 0);
+        return Id;
     }
 
-     
-    
-    private void clienteClicado(MouseEvent e){
-      int id =  idTabla(modeloCliente,tablaCliente,e); 
-      if(id >0){
-       this.idCliente =id;
-          System.out.println(id);
-      }
+    private void clienteClicado(MouseEvent e) {
+        int id = idTabla(modeloCliente, tablaCliente, e);
+        if (id > 0) {
+            this.idCliente = id;
+            System.out.println(id);
+        }
     }
-    
-    private void concesionarioClicado(MouseEvent e){
-      int id =  idTabla(modeloConcesionario,tablaCliente,e);
-      if(id >0){
-          this.idConcesionario = id;
-      }
+
+    private void concesionarioClicado(MouseEvent e) {
+        int id = idTabla(modeloConcesionario, tablaCliente, e);
+        if (id > 0) {
+            this.idConcesionario = id;
+        }
     }
-    
-    private void cocheClicado(MouseEvent e){   
-      int id =  idTabla(modeloCoche,tablaCoche,e);
-      if(id >0){
-          this.idCoche =id;
-       }
-      }
-  
-    private void fabricanteClicado(MouseEvent e){
-       int id =  idTabla(modeloFabricante,tablaFabricante,e);
-         if(id >0){
-             this.idFabricante = id;
-       }   
+
+    private void cocheClicado(MouseEvent e) {
+        int id = idTabla(modeloCoche, tablaCoche, e);
+        if (id > 0) {
+            this.idCoche = id;
+        }
     }
-    
-   
-    
+
+    private void fabricanteClicado(MouseEvent e) {
+        int id = idTabla(modeloFabricante, tablaFabricante, e);
+        if (id > 0) {
+            this.idFabricante = id;
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getSource() == tablaCliente){
-           clienteClicado(e);  
+        if (e.getSource() == tablaCliente) {
+            clienteClicado(e);
         }
 
-        if(e.getSource() == tablaConcesionario){
+        if (e.getSource() == tablaConcesionario) {
             concesionarioClicado(e);
         }
-       
-        if(e.getSource() == tablaCoche){
+
+        if (e.getSource() == tablaCoche) {
             cocheClicado(e);
         }
-        
-        if(e.getSource()== tablaFabricante){
+
+        if (e.getSource() == tablaFabricante) {
             fabricanteClicado(e);
         }
-       
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-       
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-      
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-       
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-      
+
     }
 
     @Override
     public void tableChanged(TableModelEvent e) {
-        
+
     }
 }

@@ -177,6 +177,45 @@ public class Listar {
             System.out.println(marca+"  "+modelo+" "+cantidad);
             resultado ="Marca "+marca+" modelo "+modelo+" es deseado por: "+cantidad+" persona/s";
         }
+       
+       manager2.close();
        return resultado;
     }
+    
+    public static int cantidadVentaCocheId(int idCoche){
+       TypedQuery<Venta> consulta = Conexion.getConexion().getEmf().createNamedQuery("cantidaVentaCocheId", Venta.class).setParameter("idCoche", idCoche);
+        List<Venta> ventas =consulta.getResultList();
+        Conexion.getConexion().getEmf().close();
+        return ventas.size();      
+    }
+    
+    public static int cantidadVentaConcesionarioId(int idConcesionario){
+         TypedQuery<Venta> consulta = Conexion.getConexion().getEmf().createNamedQuery("cantidaVentaConcesionarioId", Venta.class).setParameter("idConcesionario", idConcesionario);
+        List<Venta> ventas =consulta.getResultList();
+        Conexion.getConexion().getEmf().close();
+        return ventas.size();      
+    }
+
+    public static int cantidadCocheFabricante(int idFabricante) {
+       TypedQuery<Coche> consulta = Conexion.getConexion().getEmf().createNamedQuery("cantidadCocheFabricante", Coche.class).setParameter("idFabricante", idFabricante);
+        List<Coche> coches =consulta.getResultList();
+        Conexion.getConexion().getEmf().close();
+        return coches.size(); 
+    }
+
+    public static int cantidadClienteVenta(int idCliente) {
+        TypedQuery<Venta> consulta = Conexion.getConexion().getEmf().createNamedQuery("cantidadVentaClienteId", Venta.class).setParameter("idCliente", idCliente);
+        List<Venta> ventas =consulta.getResultList();
+        Conexion.getConexion().getEmf().close();
+        return ventas.size();     
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

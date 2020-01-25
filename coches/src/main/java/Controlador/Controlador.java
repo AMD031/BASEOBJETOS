@@ -153,6 +153,21 @@ public class Controlador {
         return Listar.cocheMasPopular();
     }
 
+    public static int cantidaVentaCocheId(int idCoche) {
+      return Listar.cantidadVentaCocheId(idCoche);
+    }
+
+   public static int cantidaVentaConcesionarioId(int idConcesionario){
+       return Listar.cantidadVentaConcesionarioId(idConcesionario);
+   }
+   
+   public static int cantidadCocheFabricante(int idFabricante){
+       return Listar.cantidadCocheFabricante(idFabricante);
+   }
+   
+   public static int cantidadClienteVenta(int idCliente){
+     return Listar.cantidadClienteVenta(idCliente);
+   }
  
     
   

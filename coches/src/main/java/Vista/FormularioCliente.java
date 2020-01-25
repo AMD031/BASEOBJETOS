@@ -239,6 +239,7 @@ public class FormularioCliente extends javax.swing.JPanel {
         CocheFavorito cocheFavorito = new CocheFavorito();
         boolean noEnBlanco = false;
         boolean dniValido = false;
+        boolean fechaValida = Utilidades.validarFecha(fFecha.getText());
         
         if (!fNombre.getText().equals("")
          && !fApellidos.getText().equals("")
@@ -267,7 +268,7 @@ public class FormularioCliente extends javax.swing.JPanel {
         clienteEditado.setCocheFavorito(cocheFavorito);
        
         
-        if (noEnBlanco && dniValido) {
+        if (noEnBlanco && dniValido && fechaValida) {
             if (nuevo) {
 
                 Controlador.crear(Utilidades.CLIENTE, clienteEditado);
@@ -285,6 +286,9 @@ public class FormularioCliente extends javax.swing.JPanel {
              if(!dniValido){
              Utilidades.errorTextoDialog("Dni no valido", this);
           }
+           if(!fechaValida){
+               Utilidades.errorTextoDialog("La fecha no es valida", this);
+           }
 
     }//GEN-LAST:event_guardarActionPerformed
 

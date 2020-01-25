@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 /**
@@ -28,8 +29,8 @@ import javax.persistence.Table;
  */
 
 @NamedQueries({
-@NamedQuery(name="recupearTodoCoche", query="select c from Coche c")
-  
+@NamedQuery(name="recupearTodoCoche", query="select c from Coche c"),
+@NamedQuery(name ="cantidadCocheFabricante", query ="Select c from Coche c inner join c.fabricante f where f.id =:idFabricante")
 })
 
 @Entity
@@ -174,7 +175,12 @@ public class Coche {
          }
     }
 
-    
+    @PreRemove
+    private void nulificarCoche(){
+        for(Venta v: ventas){
+            v.setCoche(null);
+        }
+    }
     
     
     

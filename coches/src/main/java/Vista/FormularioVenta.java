@@ -79,7 +79,7 @@ public class FormularioVenta extends javax.swing.JPanel implements MouseListener
    private void inicializarTablaClientes(){
     List<Cliente>clientes = Controlador.devolverClientes();
           for (Cliente cliente :clientes ) {
-            if(cliente !=null && !cliente.getNombre().equals("desconocido")){
+            if(cliente !=null ){
              modeloCliente.addRow(new Object[]{cliente.getId(),
                  cliente.getNombre(),cliente.getApellidos(),
                  cliente.getLocalidad(),cliente.getDniNie(),cliente.getFecha()}); 

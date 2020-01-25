@@ -35,7 +35,8 @@ import javax.persistence.Table;
 @NamedQueries({
 @NamedQuery(name="recupearTodoCliente", query="select c from Cliente c"),
 @NamedQuery(name="recuperarCriteriaSinOrder", query = "SELECT c FROM Cliente c INNER JOIN c.ventasCli cli INNER JOIN cli.concesionario r  INNER JOIN cli.coche co  where co.ventas.fecha =:fechaVenta and r.cif=:CIFConcesionario order by c.apellidos , c.nombre"),
-@NamedQuery(name="recuperarCriteriaConOrder", query = "SELECT c FROM Cliente c INNER JOIN c.ventasCli cli INNER JOIN cli.concesionario r  INNER JOIN cli.coche co  where co.ventas.fecha =:fechaVenta and r.cif=:CIFConcesionario")
+@NamedQuery(name="recuperarCriteriaConOrder", query = "SELECT c FROM Cliente c INNER JOIN c.ventasCli cli INNER JOIN cli.concesionario r  INNER JOIN cli.coche co  where co.ventas.fecha =:fechaVenta and r.cif=:CIFConcesionario"),
+
   
 })
 
@@ -126,12 +127,7 @@ public class Cliente {
     @OneToMany (mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY) 
     private List<Venta> ventasCli;
     
-    @PreRemove
-    public void nulificarClienteVentas(){
-      for(Venta venta: ventasCli  ){
-         venta.setCliente(null);
-      }
-    }
+ 
 
     public List<Venta> getVentasCli() {
         return ventasCli;
