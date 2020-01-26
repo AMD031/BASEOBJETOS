@@ -311,8 +311,10 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener, Table
            if (Controlador.cantidadClienteVenta(this.idCliente)>0) {
                  Util.Utilidades.errorTextoDialog("El cliente es usado por una venta no se puede borrar.", this);
             } else {
-               Controlador.eliminarCliente(this.idCliente);
-               modeloCliente.removeRow(tablaCliente.getSelectionModel().getLeadSelectionIndex());
+               if(Controlador.eliminarCliente(this.idCliente)){
+                   modeloCliente.removeRow(tablaCliente.getSelectionModel().getLeadSelectionIndex()); 
+               }
+              
          }
         }
     }//GEN-LAST:event_eliminarClienteActionPerformed
@@ -322,8 +324,10 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener, Table
             if (Controlador.cantidaVentaConcesionarioId(idConcesionario) > 0) {
                 Util.Utilidades.errorTextoDialog("El concesionario es usado por una venta no se puede borrar.", this);
             } else {
-                Controlador.eliminarConcesionario(this.idConcesionario);
-                modeloConcesionario.removeRow(tablaConcesionario.getSelectionModel().getLeadSelectionIndex());
+                if(Controlador.eliminarConcesionario(this.idConcesionario)){
+                   modeloConcesionario.removeRow(tablaConcesionario.getSelectionModel().getLeadSelectionIndex()); 
+                }
+                
             }
         }
     }//GEN-LAST:event_eliminarConcesionarioActionPerformed
@@ -333,8 +337,9 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener, Table
             if (Controlador.cantidaVentaCocheId(this.idCoche)>0) {
                 Util.Utilidades.errorTextoDialog("El coche es usado por una venta no se puede borrar.", this);
             } else {
-                Controlador.eliminarCoche(this.idCoche);
-                modeloCoche.removeRow(tablaCoche.getSelectionModel().getLeadSelectionIndex());
+                if(Controlador.eliminarCoche(this.idCoche)){
+                   modeloCoche.removeRow(tablaCoche.getSelectionModel().getLeadSelectionIndex());
+                }
             }
         }
 
@@ -345,8 +350,11 @@ public class Eliminar extends javax.swing.JPanel implements MouseListener, Table
             if (Controlador.cantidadCocheFabricante(this.idFabricante)>0) {
                 Util.Utilidades.errorTextoDialog("El fabricante es usado por una coche no se puede borrar.", this);  
             } else {
-                modeloFabricante.removeRow(tablaFabricante.getSelectionModel().getLeadSelectionIndex());
-                Controlador.eliminarFabricante(this.idFabricante);
+                if( Controlador.eliminarFabricante(this.idFabricante)){
+                   modeloFabricante.removeRow(tablaFabricante.getSelectionModel().getLeadSelectionIndex());
+                }
+            
+               
             }
 
         }

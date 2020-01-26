@@ -174,7 +174,7 @@ public class Listar {
             String marca= (String) tuple.get(0);
             String modelo =(String) tuple.get(1);
             Long cantidad = (Long) tuple.get(2);
-            System.out.println(marca+"  "+modelo+" "+cantidad);
+           // System.out.println(marca+"  "+modelo+" "+cantidad);
             resultado ="Marca "+marca+" modelo "+modelo+" es deseado por: "+cantidad+" persona/s";
         }
        

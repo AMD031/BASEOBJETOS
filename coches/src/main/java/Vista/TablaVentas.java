@@ -210,7 +210,7 @@ public class TablaVentas extends javax.swing.JFrame implements MouseListener, Ta
         jLabel1.setText("Ventas");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("Coche mas deseado:");
+        jLabel6.setText("Coche más deseado:");
 
         cocheMasDesado.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         cocheMasDesado.setText("label1");

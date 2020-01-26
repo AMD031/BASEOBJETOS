@@ -121,7 +121,7 @@ public class FormularioCoche extends javax.swing.JPanel {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Nuevo fabricante coche:");
+        jLabel3.setText("Fabricante coche:");
 
         Modelo1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Modelo1.setText("Cif");
