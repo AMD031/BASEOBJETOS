@@ -119,8 +119,7 @@ public class Crear {
           Concesionario concesionario = manager.find(Concesionario.class,idConcesionario);
           Cliente cliente = manager.find(Cliente.class,idCliente);
    
-          if(coche !=null && concesionario !=null){
-              coche.addVenta(venta);
+          if(coche !=null && concesionario !=null && cliente!=null){
               concesionario.addVentaCon(venta);
               coche.addVenta(venta);
               cliente.addVentaCli(venta);

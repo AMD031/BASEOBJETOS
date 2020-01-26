@@ -21,6 +21,7 @@ public class FormularioCliente extends javax.swing.JPanel {
      * Creates new form FormularioCliente
      */
     private int id;
+    private int cocheFavoritoId;
     private Cliente cliente;
     private CocheFavorito cocheFavorito;
     private boolean nuevo;
@@ -28,9 +29,11 @@ public class FormularioCliente extends javax.swing.JPanel {
     public FormularioCliente(int id) {
         initComponents();
         this.id = id;
+        this.cocheFavoritoId =0;
         inicializaObjetos();
         volcarDatosCoche();
         nuevo = false;
+       
 
     }
 
@@ -47,9 +50,14 @@ public class FormularioCliente extends javax.swing.JPanel {
         if (venta != null) {
             this.cliente = Controlador.obtenerVenta(id).getCliente();
         }
+        
         if (this.cliente != null) {
-            this.cocheFavorito = cliente.getCocheFavorito();
+           if(cliente.getCocheFavorito()!=null){
+             this.cocheFavorito = cliente.getCocheFavorito();
+             this.cocheFavoritoId = this.cocheFavorito.getId();
+           } 
         }
+        
     }
 
     private void volcarDatosCoche() {
@@ -60,8 +68,11 @@ public class FormularioCliente extends javax.swing.JPanel {
             fLocalidad.setText(cliente.getLocalidad());
             fDni.setText(cliente.getDniNie());
             fFecha.setText(cliente.getFecha());
-            marcaFavorito.setText(cliente.getCocheFavorito().getMarca());
-            modeloFavorito.setText(cliente.getCocheFavorito().getModelo());
+            if(cliente.getCocheFavorito()!=null){
+               marcaFavorito.setText(cliente.getCocheFavorito().getMarca());
+               modeloFavorito.setText(cliente.getCocheFavorito().getModelo());
+            }
+      
 
         }
 
@@ -236,7 +247,7 @@ public class FormularioCliente extends javax.swing.JPanel {
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
 
         Cliente clienteEditado = new Cliente();
-        CocheFavorito cocheFavorito = new CocheFavorito();
+        CocheFavorito cocheFavoritoEditado = new CocheFavorito();
         boolean noEnBlanco = false;
         boolean dniValido = false;
         boolean fechaValida = Utilidades.validarFecha(fFecha.getText());
@@ -263,18 +274,17 @@ public class FormularioCliente extends javax.swing.JPanel {
         clienteEditado.setLocalidad(fLocalidad.getText());
         clienteEditado.setFecha(fFecha.getText());
 
-        cocheFavorito.setMarca(marcaFavorito.getText());
-        cocheFavorito.setModelo(modeloFavorito.getText());
-        clienteEditado.setCocheFavorito(cocheFavorito);
-       
-        
+        cocheFavoritoEditado.setMarca(marcaFavorito.getText());
+        cocheFavoritoEditado.setModelo(modeloFavorito.getText());
+        clienteEditado.setCocheFavorito(cocheFavoritoEditado);
         if (noEnBlanco && dniValido && fechaValida) {
             if (nuevo) {
 
                 Controlador.crear(Utilidades.CLIENTE, clienteEditado);
              }
              if (!nuevo) {
-                cocheFavorito.setId(this.cocheFavorito.getId());
+                 System.out.println(this.cocheFavoritoId);
+                cocheFavoritoEditado.setId(this.cocheFavoritoId);
                 Controlador.actualizarVentaObjeto(clienteEditado, Utilidades.CLIENTE, id);
             }
 

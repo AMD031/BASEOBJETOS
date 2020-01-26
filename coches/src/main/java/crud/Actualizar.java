@@ -68,19 +68,26 @@ public class Actualizar {
         }
         if(Campo == Utilidades.CLIENTE){     
           Cliente cliente =(Cliente)object;
-          
+
           venta.getCliente().setNombre(cliente.getNombre());
           venta.getCliente().setApellidos(cliente.getApellidos());
           venta.getCliente().setDniNie(cliente.getDniNie());
           venta.getCliente().setLocalidad(cliente.getLocalidad());
           venta.getCliente().setFecha(cliente.getFecha());
           
-         CocheFavorito cf =manager.find(CocheFavorito.class, cliente.getCocheFavorito().getId());
+          CocheFavorito cf =manager.find(CocheFavorito.class, cliente.getCocheFavorito().getId());
           
-          cf.setMarca(cliente.getCocheFavorito().getMarca());
-          cf.setModelo(cliente.getCocheFavorito().getModelo());
+          
+          if(cf!=null){
+             cf.setMarca(cliente.getCocheFavorito().getMarca());
+             cf.setModelo(cliente.getCocheFavorito().getModelo());
+          }else{
+             CocheFavorito cf2 = new CocheFavorito(cliente.getCocheFavorito().getMarca(),cliente.getCocheFavorito().getModelo());
+             venta.getCliente().setCocheFavorito(cf2);
+             manager.persist(cf2);
+          }
+
          
-          
           manager.persist(venta);
         }
        }   
